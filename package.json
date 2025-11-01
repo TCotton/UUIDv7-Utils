@@ -18,9 +18,6 @@
     "dist/**/*.map",
     "!dist/**/*.test.*"
   ],
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "scripts": {
     "build": "npm run build:clean && npm run build:esm && npm run build:cjs && npm run build:fix-modules",
     "build:clean": "rm -rf dist",
