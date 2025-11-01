@@ -6,39 +6,12 @@ const uuidVersionValidation = (uuid: string): UUIDVersionTuple => {
   const match = uuid.match(uuidRegex);
 
   if (match) {
-    if (match) {
-      // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
-      const version = uuid.charAt(14);
+    // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
+    const version = uuid.charAt(14);
 
-      if (version === '1') {
-        return 'v1';
-      }
-
-      if (version === '2') {
-        return 'v2';
-      }
-
-      if (version === '3') {
-        return 'v3';
-      }
-
-      if (version === '4') {
-        return 'v4';
-      }
-
-      if (version === '5') {
-        return 'v5';
-      }
-
-      if (version === '6') {
-        return 'v6';
-      }
-
-      if (version === '7') {
-        return 'v7';
-      }
-    }
+    return `v${version}` as UUIDVersionTuple;
   }
+  return undefined;
 };
 
 export { uuidVersionValidation, type UUIDVersionTuple };

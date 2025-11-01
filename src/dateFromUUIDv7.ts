@@ -28,13 +28,12 @@ const dateFromUUIDv7 = (uuid: string): DateFromUUIDv7Result => {
           dateToIsoString: date.toISOString(),
           dateUTCTime: date.getTime(),
         };
-      } catch (error) {
-        if (error) {
-          return undefined;
-        }
+      } catch (_error) {
+        return undefined;
       }
     }
   }
+  return undefined;
 };
 
 export { dateFromUUIDv7, type DateFromUUIDv7Result };

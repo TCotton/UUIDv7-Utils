@@ -7,7 +7,7 @@ A lightweight TypeScript utility library for handling UUIDv7 strings.
 - Extract date from UUIDv7 string - `dateFromUUIDv7(uuid: string): DateFromUUIDv7Result`
 - returns JSON object `{ dateToIsoString: string, dateUTCTime: number }`
 
-- Find version number from UUID string - `uuidVersionValidation(uuid: string): DateFromUUIDv7Result`
+- Find version number from UUID string - `uuidVersionValidation(uuid: string): UUIDVersionTuple`
 - returns string `'v1' | 'v2' | 'v3' | 'v4' | 'v5' | 'v6' | 'v7' | undefined`
 
 ## Installation
@@ -35,6 +35,7 @@ Using this function, you can extact the timestamp from the UUIDv7. It will error
 
 ```typescript
 import { dateFromUUIDv7, uuidVersionValidation } from 'uuidv7-utilities';
+import type { DateFromUUIDv7Result,  UUIDVersionTuple} from 'uuidv7-utilities';
 
 const uuid = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
 const v = uuidVersionValidation('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
