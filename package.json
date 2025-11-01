@@ -1,7 +1,7 @@
 {
   "name": "uuidv7-utilities",
   "version": "2.0.2",
-  "description": "Converts UUIDv7 string to a date",
+  "description": "UUIDv7 utilities for extracting date information from a UUIDv7 string and validating UUID versions.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
