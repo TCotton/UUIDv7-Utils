@@ -1,11 +1,16 @@
-# dateFromUUIDv7
+# uuidv7-utilities
 
-A lightweight TypeScript utility library for extracting dates from UUIDv7 strings.
+A lightweight TypeScript utility library for handling UUIDv7 strings.
+
+## Features
+
+- Extract date from UUIDv7 string - `dateFromUUIDv7(uuid: unknown): DateFromUUIDv7Result | null`
+- returns JSON object `{ dateToIsoString: string, dateUTCTime: number } | null`
 
 ## Installation
 
 ```bash
-npm install datefromuuidv7
+npm install uuidv7-utilities
 ```
 
 ## Requirements
@@ -26,39 +31,46 @@ Using this function, you can extact the timestamp from the UUIDv7. It will error
 ## Usage
 
 ```typescript
-import { dateFromUUIDv7 } from 'datefromuuidv7';
+import { dateFromUUIDv7 } from 'uuidv7-utilities';
 
 // Extract date from a UUIDv7
 const uuid = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
-const date = dateFromUUIDv7(uuid);
+const result = dateFromUUIDv7(uuid);
 
-console.log(date.toISOString()); // "2024-06-02T12:43:04.064Z"
-console.log(date.getTime()); // 1717332184064
+if (result) {
+  console.log(result.dateToIsoString); // "2024-06-02T12:43:04.064Z"
+  console.log(result.dateUTCTime); // 1717332184064
+}
 ```
 
 ### CommonJS
 
 ```javascript
-const { dateFromUUIDv7 } = require('datefromuuidv7');
+const { dateFromUUIDv7 } = require('uuidv7-utilities');
 
 const uuid = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
-const date = dateFromUUIDv7(uuid);
+const result = dateFromUUIDv7(uuid);
 
-console.log(date.toISOString());
+if (result) {
+  console.log(result.dateToIsoString);
+  console.log(result.dateUTCTime);
+}
 ```
 
 ## API
 
-### `dateFromUUIDv7(uuid: string): Date`
+### `dateFromUUIDv7(uuid: unknown): DateFromUUIDv7Result | null`
 
-Extracts a Date object from a UUIDv7 string. UUIDv7 embeds a timestamp in the first 48 bits (6 bytes) representing milliseconds since Unix epoch.
+Extracts date information from a UUIDv7 string. UUIDv7 embeds a timestamp in the first 48 bits (6 bytes) representing milliseconds since Unix epoch.
 
 **Parameters:**
-- `uuid` (string): The UUIDv7 string to convert
+- `uuid` (unknown): The UUID to convert (only string values are processed)
 
 **Returns:**
-- `Date`: Date object extracted from the UUID
-- `null`: If the input is not a valid UUID
+- `DateFromUUIDv7Result`: Object with extracted date information
+  - `dateToIsoString`: ISO 8601 formatted date string
+  - `dateUTCTime`: UTC timestamp in milliseconds
+- `null`: If the input is not a valid UUID string
 
 **Throws:**
 - `Error`: If the UUID format is invalid or is not a valid UUIDv7. If the UUID is v1 to v6 it will throw an error with the UUID version inputted.
