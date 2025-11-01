@@ -29,6 +29,8 @@ However, beware that node `crypto.randomUUID()` and the PostgresQL `gen_random_u
 
 From PostgreSQL 18, use the `uuidv7()` function instead of `gen_random_uuid()` to generate a UUID for a primary key, ex: `user_id       UUID PRIMARY KEY     DEFAULT uuidv7()`
 
+A UUID v7 creation NPM library is [uuidv7](https://www.npmjs.com/package/uuidv7) by [LiosK](https://github.com/LiosK).
+
 Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUIDv7. It will error if UUID versions under 7 are used, with clear error messages. The `uuidVersionValidation` function will return the UUID version number, from 1 to 7.
 
 ## Usage
@@ -38,9 +40,9 @@ import { dateFromUUIDv7, uuidVersionValidation } from 'uuidv7-utilities';
 import type { DateFromUUIDv7Result,  UUIDVersionTuple} from 'uuidv7-utilities';
 
 const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
-const uuidV7 = uuidVersionValidation('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
-if (uuidV7) {
-    const result = dateFromUUIDv7(uuidV7);
+const uuid = uuidVersionValidation('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+if (uuid === 'v7') {
+    const result = dateFromUUIDv7(uuid);
     console.log(result.dateToIsoString);
     console.log(result.dateUTCTime);
 }
@@ -52,9 +54,9 @@ if (uuidV7) {
 const { dateFromUUIDv7, uuidVersionValidation } = require('uuidv7-utilities');
 
 const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
-const uuidV7 = uuidVersionValidation('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
-if (uuidV7) {
-    const result = dateFromUUIDv7(uuidV7);
+const uuid = uuidVersionValidation('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+if (uuid === 'v7') {
+    const result = dateFromUUIDv7(uuid);
     console.log(result.dateToIsoString);
     console.log(result.dateUTCTime);
 }
