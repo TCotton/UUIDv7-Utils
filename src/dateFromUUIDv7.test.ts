@@ -1,6 +1,6 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { dateFromUUIDv7 } from './dateFromUUIDv7.js';
+import { dateFromUUIDv7 } from './index.js';
 
 describe('dateFromUUIDv7', () => {
   it('returns undefined for invalid UUID format', () => {
