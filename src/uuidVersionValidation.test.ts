@@ -126,7 +126,7 @@ describe('uuidVersionValidation', () => {
       'ffffffff-ffff-ffff-ffff-ffffffffffff',
       'ffffffff-ffff-ffff-ffff-ffffffffffff',
       'ffffffff-ffff-ffff-ffff-ffffffffffff',
-      'ffffffff-ffff-ffff-ffff-ffffffffffff',
+      'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF',
     ];
     for (const MaxUUID of MaxUUIDArray) {
       assert.strictEqual(uuidVersionValidation(MaxUUID), 'MaxUUID');
