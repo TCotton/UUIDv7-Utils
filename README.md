@@ -51,6 +51,19 @@ if (uuid === 'v7') {
     }
 }
 ```
+```typescript
+import { dateFromUUIDv7, uuidVersionValidation } from 'uuidv7-utilities';
+
+const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
+const uuid = uuidVersionValidation(uuidString);
+console.log(uuid);  // 'v7'
+const result = dateFromUUIDv7(uuidString);
+if (result) {
+    console.log(result.dateToIsoString);     // '2024-06-02T12:43:04.064Z'
+    console.log(result.dateUnixEpoch);       // 1717332184064
+    console.log(result.dateToUTCString);     // 'Sun, 02 Jun 2024 12:43:04 GMT'
+}
+```
 
 ### CommonJS
 
