@@ -26,13 +26,13 @@ npm install uuidv7-utilities
 
 When using a UUID for the primary key of a SQL database tables, for performance reasons, you should use UUIDv7 instead of UUIDv4. UUIDv7 embeds a timestamp in the first 48 bits (6 bytes) representing milliseconds since Unix epoch. 
 
-However, beware that node `crypto.randomUUID()` and the PostgresQL `gen_random_uuid()` return a UUIDv4.
+However, beware - node `crypto.randomUUID()` and the PostgresQL `gen_random_uuid()` returns a UUIDv4.
 
 From PostgreSQL 18, use the `uuidv7()` function instead of `gen_random_uuid()` to generate a UUID for a primary key, ex: `user_id       UUID PRIMARY KEY     DEFAULT uuidv7()`
 
 A UUID v7 creation NPM library is [uuidv7](https://www.npmjs.com/package/uuidv7) by [LiosK](https://github.com/LiosK).
 
-Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUIDv7. It will return `undefined` if the UUID is not a valid UUIDv7. The `uuidVersionValidation` function will return the UUID version number, from 1 to 7.
+Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUIDv7. It will return `undefined` if the UUID is not a valid UUIDv7. The `uuidVersionValidation` function will return the UUID version version from 1 to 8, or the string `'NilUUID'` or `'MaxUUID'`, and `undefined` if the UUID is not a valid UUIDv7 string.
 
 ## Usage
 
@@ -87,7 +87,7 @@ Extracts date information from a UUIDv7 string. UUIDv7 embeds a timestamp in the
 
 ### `uuidVersionValidation(uuid: string): UUIDVersionTuple`
 
-Returns the UUID version number, from 1 to 7.
+Returns the UUID version, from 1 to 8, or the string `'NilUUID'` or `'MaxUUID'`, and `undefined` if the UUID is not a valid UUIDv7 string.
 
 **Parameters:**
 - `uuid` (string): The UUID to validate
