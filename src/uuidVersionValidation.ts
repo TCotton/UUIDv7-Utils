@@ -27,7 +27,7 @@ const uuidVersionValidation = (uuid: string): UUIDVersionTuple => {
     return 'NilUUID' as UUIDVersionTuple;
   }
 
-  if (uuid === 'ffffffff-ffff-ffff-ffff-ffffffffffff') {
+  if (uuid.toLowerCase() === 'ffffffff-ffff-ffff-ffff-ffffffffffff') {
     return 'MaxUUID' as UUIDVersionTuple;
   }
 
