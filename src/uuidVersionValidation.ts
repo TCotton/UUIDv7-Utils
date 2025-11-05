@@ -25,21 +25,9 @@ interface UUIDVersion {
 
 const uuidVersionValidation = (
   uuid: UUIDVersion['uuid'],
-  versionNumber?: number
+  versionNumber?: UUIDVersion['versionNumber']
 ): UUIDVersionTuple => {
   const match: RegExpMatchArray | null = uuidRegex(uuid);
-
-  if (match && versionNumber) {
-    const version = uuid.charAt(14);
-    return Number(version) === versionNumber;
-  }
-
-  if (match) {
-    // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
-    const version = uuid.charAt(14);
-
-    return `v${version}` as UUIDVersionTuple;
-  }
 
   if (uuid === '00000000-0000-0000-0000-000000000000') {
     return 'NilUUID' as UUIDVersionTuple;
@@ -49,7 +37,25 @@ const uuidVersionValidation = (
     return 'MaxUUID' as UUIDVersionTuple;
   }
 
+  if (match && versionNumber !== undefined) {
+    // Validate that versionNumber is an integer between 1 and 8
+    if (Number.isInteger(versionNumber) && versionNumber >= 1 && versionNumber <= 8) {
+      const version = uuid.charAt(14);
+      return Number(version) === versionNumber;
+    } else {
+      // Invalid versionNumber provided
+      return undefined;
+    }
+  }
+
+  if (match) {
+    // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
+    const version = uuid.charAt(14);
+
+    return `v${version}` as UUIDVersionTuple;
+  }
+
   return undefined;
 };
 
-export { uuidVersionValidation, type UUIDVersionTuple };
+export { uuidVersionValidation, type UUIDVersionTuple, type UUIDVersion };

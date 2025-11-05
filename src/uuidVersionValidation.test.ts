@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import { uuidVersionValidation } from './index.js';
+import type { UUIDVersion } from './uuidVersionValidation.js';
 
 describe('uuidVersionValidation', () => {
   it('should return v1 for a version 1 UUID', () => {
@@ -185,7 +186,7 @@ describe('uuidVersionValidation', () => {
       for (const { uuid, version } of testCases) {
         // Should return true for matching version
         assert.strictEqual(
-          uuidVersionValidation(uuid, version),
+          uuidVersionValidation(uuid, version as UUIDVersion['versionNumber']),
           true,
           `UUID ${uuid} should match version ${version}`
         );
@@ -194,7 +195,7 @@ describe('uuidVersionValidation', () => {
         const otherVersions = [1, 2, 3, 4, 5, 6, 7, 8].filter((v) => v !== version);
         for (const otherVersion of otherVersions) {
           assert.strictEqual(
-            uuidVersionValidation(uuid, otherVersion),
+            uuidVersionValidation(uuid, otherVersion as UUIDVersion['versionNumber']),
             false,
             `UUID ${uuid} should not match version ${otherVersion}`
           );
@@ -212,7 +213,7 @@ describe('uuidVersionValidation', () => {
       for (const invalidUuid of invalidUuids) {
         for (const version of [1, 2, 3, 4, 5, 6, 7, 8]) {
           assert.strictEqual(
-            uuidVersionValidation(invalidUuid, version),
+            uuidVersionValidation(invalidUuid, version as UUIDVersion['versionNumber']),
             undefined,
             `Invalid UUID ${invalidUuid} should return undefined even with version ${version}`
           );
@@ -228,12 +229,12 @@ describe('uuidVersionValidation', () => {
       // so they fall through to the special case handling and return their special values
       for (const version of [1, 2, 3, 4, 5, 6, 7, 8]) {
         assert.strictEqual(
-          uuidVersionValidation(nilUuid, version),
+          uuidVersionValidation(nilUuid, version as UUIDVersion['versionNumber']),
           'NilUUID',
           `Nil UUID with version parameter ${version} should return 'NilUUID'`
         );
         assert.strictEqual(
-          uuidVersionValidation(maxUuid, version),
+          uuidVersionValidation(maxUuid, version as UUIDVersion['versionNumber']),
           'MaxUUID',
           `Max UUID with version parameter ${version} should return 'MaxUUID'`
         );
