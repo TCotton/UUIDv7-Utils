@@ -36,6 +36,10 @@ jobs:
         continue-on-error: true
         run: npm test
 
+      - name: Get current timestamp
+        id: timestamp
+        run: echo "date=$(date +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
+
       - name: Check for changes in package files
         id: check-changes
         run: |
@@ -93,7 +97,7 @@ jobs:
             ## Verification
             ${{ steps.run-tests.outcome == 'success' && 'The automated tests have been run and are passing. Please review the changes in both `package.json` and `package-lock.json` to ensure the updates are appropriate.' || 'Manual testing and review required due to test failures.' }}
             
-            Auto-generated on: ${{ github.run_id }}
+            Auto-generated on: ${{ steps.timestamp.outputs.date }}
           branch: update-dependencies-${{ github.run_number }}
           delete-branch: true
           labels: >-
