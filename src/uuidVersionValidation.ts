@@ -22,27 +22,20 @@ const uuidVersionValidation = (uuid: string): UUIDVersionTuple => {
     // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
     const version = uuid.charAt(14);
 
-    // Return the appropriate version string based on the extracted version
-    switch (version) {
-      case '1':
-        return 'v1';
-      case '2':
-        return 'v2';
-      case '3':
-        return 'v3';
-      case '4':
-        return 'v4';
-      case '5':
-        return 'v5';
-      case '6':
-        return 'v6';
-      case '7':
-        return 'v7';
-      case '8':
-        return 'v8';
-      default:
-        return undefined;
-    }
+    // Object literal mapping for version characters to version strings
+    const versionMap = {
+      '1': 'v1',
+      '2': 'v2',
+      '3': 'v3',
+      '4': 'v4',
+      '5': 'v5',
+      '6': 'v6',
+      '7': 'v7',
+      '8': 'v8',
+    } as const;
+
+    // Return the appropriate version string or undefined if not found
+    return versionMap[version as keyof typeof versionMap] || undefined;
   }
 
   if (isNilUUID) {
