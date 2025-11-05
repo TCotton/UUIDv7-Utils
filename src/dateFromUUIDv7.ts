@@ -8,8 +8,8 @@ type DateFromUUIDv7Result =
   | undefined;
 
 const dateFromUUIDv7 = (uuid: string): DateFromUUIDv7Result => {
-  // Check if the string matches UUID format (with hyphens) first
-  const match: RegExpMatchArray | null = uuidRegex(uuid); //RegExpMatchArray
+  // Validate UUID format using uuidRegex
+  const match: RegExpMatchArray | null = uuidRegex(uuid);
 
   if (match) {
     // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
