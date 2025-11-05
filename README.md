@@ -38,7 +38,6 @@ Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUID
 
 ```typescript
 import { dateFromUUIDv7, uuidVersionValidation } from 'uuidv7-utilities';
-import type { DateFromUUIDv7Result,  UUIDVersionTuple} from 'uuidv7-utilities';
 
 const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
 const uuid = uuidVersionValidation(uuidString);
@@ -51,6 +50,8 @@ if (uuid === 'v7') {
     }
 }
 ```
+or
+
 ```typescript
 import { dateFromUUIDv7, uuidVersionValidation } from 'uuidv7-utilities';
 

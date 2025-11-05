@@ -1,3 +1,4 @@
+import { uuidRegex } from './uuidRegex.js';
 type DateFromUUIDv7Result =
   | {
       dateToIsoString: string;
@@ -7,9 +8,8 @@ type DateFromUUIDv7Result =
   | undefined;
 
 const dateFromUUIDv7 = (uuid: string): DateFromUUIDv7Result => {
-  // Check if the string matches UUID format (with hyphens) first
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-([1-7])[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  const match = uuid.match(uuidRegex);
+  // Validate UUID format using uuidRegex
+  const match: RegExpMatchArray | null = uuidRegex(uuid);
 
   if (match) {
     // Extract the version from the UUID (13th character, or index 14 in the string with hyphens)
