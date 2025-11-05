@@ -38,14 +38,9 @@ const uuidVersionValidation = (
   }
 
   if (match && versionNumber !== undefined) {
-    // Validate that versionNumber is an integer between 1 and 8
-    if (Number.isInteger(versionNumber) && versionNumber >= 1 && versionNumber <= 8) {
-      const version = uuid.charAt(14);
-      return Number(version) === versionNumber;
-    } else {
-      // Invalid versionNumber provided
-      return undefined;
-    }
+    // Compare the version extracted from the UUID to the provided versionNumber
+    const version = uuid.charAt(14);
+    return Number(version) === versionNumber;
   }
 
   if (match) {
