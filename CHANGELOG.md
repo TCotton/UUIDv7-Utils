@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Comprehensive Buffer Support**: All main functions now accept both `string` and `Buffer` inputs
   - `dateFromUUIDv7()` function now supports `string | Buffer` parameter types
   - `uuidVersionValidation()` function now supports `string | Buffer` parameter types
-- **New Buffer privat Utility Functions**: Added robust Buffer handling infrastructure
+- **New Buffer private Utility Functions**: Added robust Buffer handling infrastructure
   - `handleBuffer()`: Universal converter for `string | Buffer` inputs to string format
   - `isBuffer()`: Type-safe Buffer detection function with proper type guards
   - `stringify()`: Efficient Buffer-to-UUID string conversion utility
