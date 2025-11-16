@@ -29,7 +29,7 @@
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "check": "biome check --write .",
-    "test": "tsc -p tsconfig.test.json && echo '{\"type\": \"module\"}' > dist/test/package.json && node --inspect --test dist/test/*.test.js",
+    "test": "tsc -p tsconfig.test.json && echo '{\"type\": \"module\"}' > dist/test/package.json && node --test dist/test/*.test.js",
     "prepublishOnly": " npm run check && npm run build"
   },
   "keywords": [
@@ -53,8 +53,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "uuidv7": "^1.0.2"
   }
 }

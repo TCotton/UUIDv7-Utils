@@ -13,8 +13,6 @@ type UUIDVersionTuple =
   | undefined;
 
 const uuidVersionValidation = (uuid: string): UUIDVersionTuple => {
-  if (Buffer.isBuffer(uuid)) {
-  }
   const match: RegExpMatchArray | null = uuidRegex(uuid);
   const isNilUUID: boolean = uuid === '00000000-0000-0000-0000-000000000000';
   // Max UUID comparison is case-insensitive to handle both upper and lower case formats
@@ -25,7 +23,7 @@ const uuidVersionValidation = (uuid: string): UUIDVersionTuple => {
     const version: string = uuid.charAt(14);
 
     // Object literal mapping for version characters to version strings
-    const versionMap: Record<typeof version, UUIDVersionTuple> = {
+    const versionMap = {
       '1': 'v1',
       '2': 'v2',
       '3': 'v3',
