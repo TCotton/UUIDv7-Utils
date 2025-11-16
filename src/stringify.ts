@@ -9,11 +9,6 @@ for (let i = 0; i < 256; ++i) {
 }
 
 const unsafeStringify = (arr: Uint8Array, offset = 0): string => {
-  // Note: Be careful editing this code!  It's been tuned for performance
-  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  //
-  // Note to future-self: No, you can't remove the `toLowerCase()` call.
-  // REF: https://github.com/uuidjs/uuid/pull/677#issuecomment-1757351351
   return (
     byteToHex[arr[offset]] +
     byteToHex[arr[offset + 1]] +
