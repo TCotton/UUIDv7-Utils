@@ -11,6 +11,7 @@ type DateFromUUIDv7Result =
 
 const dateFromUUIDv7 = (uuid: string | Buffer): DateFromUUIDv7Result => {
   const uuidString = handleBuffer(uuid);
+  if (!uuidString) return undefined;
   // Validate UUID format using uuidRegex
   const match: RegExpMatchArray | null = uuidRegex(uuidString);
 
