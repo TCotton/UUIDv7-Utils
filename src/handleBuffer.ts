@@ -5,11 +5,11 @@ import { convertBufferToUUIDString } from './convertBufferToUUIDString.js';
  * Converts a Buffer to a UUID string or passes through a string value unchanged.
  *
  * This function accepts either a Buffer or string as input. When a Buffer is provided,
- * it attempts to convert the buffer to a UUID string format using the `stringify` function.
+ * it attempts to convert the buffer to a UUID string format using the `convertBufferToUUIDString` function.
  *
  * **Important: Buffer Size Validation**
  *
- * This function does NOT validate buffer size before conversion. The `stringify` function
+ * This function does NOT validate buffer size before conversion. The `convertBufferToUUIDString` function
  * expects a buffer with exactly 16 bytes (the standard UUID byte length). If a buffer
  * with fewer than 16 bytes is passed:
  * - The function will still attempt to convert it to a string
