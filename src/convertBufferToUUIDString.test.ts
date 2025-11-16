@@ -113,10 +113,13 @@ describe('convertBufferToUUIDString', () => {
     const shortBuffer = Buffer.from([0x01, 0x02, 0x03]);
 
     const result = convertBufferToUUIDString(shortBuffer);
-    
+
     // The stringify function doesn't validate length, so it returns malformed output
-    assert.strictEqual(result, '010203undefined-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined');
-    
+    assert.strictEqual(
+      result,
+      '010203undefined-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
+    );
+
     // Verify it doesn't match valid UUID format
     assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
   });
@@ -125,10 +128,13 @@ describe('convertBufferToUUIDString', () => {
     const emptyBuffer = Buffer.alloc(0);
 
     const result = convertBufferToUUIDString(emptyBuffer);
-    
+
     // The stringify function doesn't validate length, so it returns malformed output with undefined values
-    assert.strictEqual(result, 'nan-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined');
-    
+    assert.strictEqual(
+      result,
+      'nan-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
+    );
+
     // Verify it doesn't match valid UUID format
     assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
   });
@@ -137,19 +143,19 @@ describe('convertBufferToUUIDString', () => {
     // Note: This test documents the behavioral change from uuid.stringify()
     // The new stringify() function doesn't throw errors for invalid input,
     // instead it returns malformed strings that can be detected by format validation
-    
+
     const invalidBuffers = [
-      Buffer.from([0x01]),                    // Too short (1 byte)
+      Buffer.from([0x01]), // Too short (1 byte)
       Buffer.from([0x01, 0x02, 0x03, 0x04]), // Too short (4 bytes)
-      Buffer.alloc(0),                        // Empty buffer
+      Buffer.alloc(0), // Empty buffer
     ];
 
     for (const buffer of invalidBuffers) {
       const result = convertBufferToUUIDString(buffer);
-      
+
       // All invalid buffers should produce non-UUID-formatted strings
       assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
-      
+
       // Results should contain 'undefined' or 'nan' for invalid input
       assert.ok(result.includes('undefined') || result.includes('nan'));
     }

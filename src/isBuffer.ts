@@ -1,1 +1,1 @@
-export const isBuffer = (value: unknown):  value is Buffer  => Buffer.isBuffer(value);
+export const isBuffer = (value: unknown): value is Buffer => Buffer.isBuffer(value);
