@@ -118,11 +118,14 @@ describe('handleBuffer', () => {
     const result = handleBuffer(shortBuffer);
     assert.strictEqual(typeof result, 'string');
 
-    // Should not match valid UUID format
-    assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    // Type guard to ensure result is string for subsequent assertions
+    if (typeof result === 'string') {
+      // Should not match valid UUID format
+      assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
-    // Should contain 'undefined' from stringify function
-    assert.ok(result.includes('undefined'));
+      // Should contain 'undefined' from stringify function
+      assert.ok(result.includes('undefined'));
+    }
   });
 
   test('should return malformed string for empty buffer', () => {
@@ -131,11 +134,14 @@ describe('handleBuffer', () => {
     const result = handleBuffer(emptyBuffer);
     assert.strictEqual(typeof result, 'string');
 
-    // Should not match valid UUID format
-    assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    // Type guard to ensure result is string for subsequent assertions
+    if (typeof result === 'string') {
+      // Should not match valid UUID format
+      assert.doesNotMatch(result, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
-    // Should contain 'undefined' or 'nan' from stringify function
-    assert.ok(result.includes('undefined') || result.includes('nan'));
+      // Should contain 'undefined' or 'nan' from stringify function
+      assert.ok(result.includes('undefined') || result.includes('nan'));
+    }
   });
 
   test('should maintain round-trip conversion for valid buffers', () => {
