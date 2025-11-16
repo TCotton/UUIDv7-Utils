@@ -1,4 +1,4 @@
-import { stringify } from 'uuid';
+import { stringify } from './stringify.js';
 
 const convertBufferToUUIDString = (originalBuf: Buffer): string => {
   return stringify(originalBuf);
