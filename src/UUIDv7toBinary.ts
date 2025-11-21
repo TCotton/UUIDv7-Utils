@@ -3,6 +3,25 @@ import { uuidRegex } from './uuidRegex.js';
 
 type UUIDv7toBinaryTuple = string | undefined;
 
+/**
+ * Converts a UUIDv7 string or Buffer to its binary (bit string) representation.
+ *
+ * Validates the input as a UUID, checks that it is version 7, and then
+ * returns a string of 128 bits representing the UUID. If the input is not a valid
+ * UUIDv7, returns `undefined`.
+ *
+ * @param {string | Buffer} uuid - The UUIDv7 as a string or Buffer.
+ * @returns {string | undefined} The 128-bit binary string representation of the UUIDv7, or `undefined` if invalid.
+ *
+ * @example
+ * // Returns a 128-character binary string
+ * UUIDv7toBinary('0187f21c-5b8c-7cc2-9c0a-8c5e4e5e4e5e');
+ *
+ * @example
+ * // Returns undefined for invalid UUID
+ * UUIDv7toBinary('not-a-uuid');
+ */
+
 const UUIDv7toBinary = (uuid: string | Buffer): UUIDv7toBinaryTuple => {
   const uuidString = handleBuffer(uuid);
 
