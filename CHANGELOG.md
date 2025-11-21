@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2025-11-21
+
+### Added
+- **UUIDv7toBinary Function**: New utility function for converting UUIDv7 to binary representation
+  - `UUIDv7toBinary(uuid: string | Buffer): string | undefined` - Converts UUIDv7 to 128-bit binary string
+  - Supports both string and Buffer inputs for consistency with existing functions
+  - Returns a 128-character binary string (128 bits) containing only '0' and '1' characters
+  - Returns `undefined` for invalid UUIDs or non-UUIDv7 versions
+  - Includes comprehensive JSDoc documentation and TypeScript type definitions
+- **UUIDv7toBinaryTuple Type**: New TypeScript type export for the binary conversion return type
+- **Extensive Binary Conversion Test Coverage**: Added 38 new test cases specifically for UUIDv7toBinary
+  - Binary structure verification (version bits, variant bits)
+  - Hex-to-binary conversion accuracy tests
+  - Edge cases including nil/max UUIDs, malformed inputs
+  - String vs Buffer equivalence validation
+  - All UUID version rejection tests (v1-v6, v8)
+
+### Changed
+- **CommonJS Deprecation**: Added deprecation warnings for CommonJS usage
+  - Created separate `index.cjs.ts` entry point with `@deprecated` JSDoc tags
+  - CommonJS imports now show IDE deprecation warnings encouraging migration to ES modules
+  - Updated `package.json` exports to use separate type definitions for CommonJS vs ESM
+  - ESM imports remain clean without deprecation warnings
+  - Functionality preserved - CommonJS still works, only developer experience differs
+- **Package Exports Configuration**: Enhanced dual-format support
+  - ESM: `import` points to clean `dist/esm/index.d.ts` type definitions
+  - CommonJS: `require` points to deprecated `dist/cjs/index.cjs.d.ts` type definitions
+- **Build Configuration**: Updated `tsconfig.cjs.json` to generate declaration files
+
+### Technical Implementation
+- **Binary Conversion Algorithm**: Efficient hex-to-binary conversion
+  - Strips UUID hyphens before conversion
+  - Converts each hexadecimal character to 4-bit binary representation
+  - Uses `padStart(4, '0')` to ensure consistent binary digit length
+  - Includes try-catch error handling for robustness
+- **Version Validation**: Extracts and validates UUID version before binary conversion
+  - Only processes UUIDs with version 7 (character at position 14 in hyphenated format)
+  - Reuses existing `uuidRegex` and `handleBuffer` utilities for consistent validation
+- **Buffer Support**: Seamless handling of both string and Buffer inputs through `handleBuffer` utility
+
+### Testing
+- **Expanded Test Suite**: Increased from 96 to 134 total tests
+- **Binary Conversion Coverage**: 38 comprehensive test cases including:
+  - Valid UUIDv7 string and Buffer conversions
+  - Correct binary representation validation (128 bits)
+  - Version bit verification (bits 48-51 should be '0111' for version 7)
+  - Variant bit verification (bits 64-65 should be '10' for RFC 4122)
+  - Real-world UUIDv7 examples
+  - Invalid input handling (wrong versions, malformed UUIDs, special characters)
+  - Consistency and idempotency tests
+- **All Tests Passing**: 134/134 tests passing with no failures
+
+### Documentation
+- **README Updates**: Added CommonJS deprecation notice in usage examples
+- **Type Exports**: Proper TypeScript type exports for `UUIDv7toBinaryTuple`
+
+### Migration Notes
+- **CommonJS Users**: While CommonJS still works, IDE will show deprecation warnings
+  - Recommended to migrate to ES modules: `import { ... } from 'uuidv7-utilities'`
+  - No breaking changes - existing code continues to function
+- **Binary Conversion Use Cases**: Useful for bit-level UUID analysis, cryptographic applications, or systems requiring binary UUID representations
+
 ## [2.3.0] - 2025-11-16
 
 ### Added

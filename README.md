@@ -13,6 +13,11 @@ A lightweight TypeScript utility library for handling UUIDv7 strings and Buffers
   - Returns string `'v1' | 'v2' | 'v3' | 'v4' | 'v5' | 'v6' | 'v7' | 'v8' | 'NilUUID' | 'MaxUUID' | undefined`
   - Conforms to [RFC 9562 Universally Unique Identifiers (UUIDs)](https://www.rfc-editor.org/rfc/rfc9562.html)
 
+- **Convert UUIDv7 to binary** - `UUIDv7toBinary(uuid: string | Buffer): string | undefined` _(New in v2.4.0)_
+  - Converts UUIDv7 to 128-bit binary representation
+  - Supports both string and Buffer inputs
+  - Returns 128-character binary string or `undefined` for invalid/non-v7 UUIDs
+
 - **Comprehensive Buffer Support** - All functions accept both string and Buffer inputs seamlessly
 
 ## Installation
@@ -36,9 +41,40 @@ From PostgreSQL 18, use the `uuidv7()` function instead of `gen_random_uuid()` t
 
 A UUID v7 creation NPM library is [uuidv7](https://www.npmjs.com/package/uuidv7) by [LiosK](https://github.com/LiosK).
 
-Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUIDv7. It will return `undefined` if the UUID is not a valid UUID string. The `uuidVersionValidation` function will return the UUID version from 1 to 8, or the string `'NilUUID'` or `'MaxUUID'`, and `undefined` if the UUID is not a valid UUID string.
+Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUIDv7. It will return `undefined` if the UUID is not a valid UUID string. The `uuidVersionValidation` function will return the UUID version from 1 to 8, or the string `'NilUUID'` or `'MaxUUID'`, and `undefined` if the UUID is not a valid UUID string. The `UUIDv7toBinary` function converts a UUIDv7 to its 128-bit binary representation, useful for bit-level analysis or cryptographic applications.
 
 ## Usage
+
+### Binary Conversion (New in v2.4.0)
+
+```typescript
+import { UUIDv7toBinary } from 'uuidv7-utilities';
+
+const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
+const binary = UUIDv7toBinary(uuidString);
+
+if (binary) {
+    console.log(binary);  // '00000001100011111101100011111001100011000000000001111010010011001000101001000111000110101101010010110000111100111010'
+    console.log(binary.length);  // 128 (bits)
+    
+    // Extract version bits (bits 48-51)
+    console.log(binary.substring(48, 52));  // '0111' (version 7)
+    
+    // Extract variant bits (bits 64-65)
+    console.log(binary.substring(64, 66));  // '10' (RFC 4122 variant)
+}
+
+// Also works with Buffer input
+const uuidBuffer = Buffer.from([
+  0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c,
+  0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1
+]);
+const binaryFromBuffer = UUIDv7toBinary(uuidBuffer);
+console.log(binary === binaryFromBuffer);  // true
+
+// Returns undefined for non-UUIDv7
+UUIDv7toBinary('550e8400-e29b-41d4-a716-446655440000');  // undefined (UUIDv4)
+```
 
 ### String UUIDs
 
@@ -116,8 +152,10 @@ if (result) {
 
 ### CommonJS
 
+**⚠️ DEPRECATED** - CommonJS support is deprecated and will be removed in a future version. Please migrate to ES modules.
+
 ```javascript
-const { dateFromUUIDv7, uuidVersionValidation } = require('uuidv7-utilities');
+const { dateFromUUIDv7, uuidVersionValidation, UUIDv7toBinary } = require('uuidv7-utilities');
 
 const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
 const uuid = uuidVersionValidation(uuidString);
@@ -128,10 +166,67 @@ if (uuid === 'v7') {
         console.log(result.dateUnixEpoch);       // 1717332184064
         console.log(result.dateToUTCString);     // 'Sun, 02 Jun 2024 12:43:04 GMT'
     }
+    
+    const binary = UUIDv7toBinary(uuidString);
+    console.log(binary?.length);  // 128
 }
 ```
 
+**Migration to ES Modules:**
+```typescript
+// Before (CommonJS - deprecated)
+const { dateFromUUIDv7 } = require('uuidv7-utilities');
+
+// After (ES Modules - recommended)
+import { dateFromUUIDv7 } from 'uuidv7-utilities';
+```
+
 ## API
+
+### `UUIDv7toBinary(uuid: string | Buffer): string | undefined` _(New in v2.4.0)_
+
+Converts a UUIDv7 to its 128-bit binary representation. This function returns a string of 128 characters containing only '0' and '1', representing the complete binary form of the UUID.
+
+**Parameters:**
+- `uuid` (string | Buffer): The UUIDv7 to convert
+  - **string**: Must be a valid UUIDv7 string format (e.g., '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1')
+  - **Buffer**: Must be exactly 16 bytes representing a UUIDv7
+
+**Returns:**
+- `string`: 128-character binary string (e.g., '00000001100011111101100011111001...')
+  - Contains only '0' and '1' characters
+  - Always exactly 128 characters long for valid UUIDv7
+  - Each hexadecimal character is converted to 4 binary digits
+- `undefined`: If the UUID is not a valid UUIDv7, malformed, or a different UUID version
+
+**Use Cases:**
+- Bit-level UUID analysis and manipulation
+- Cryptographic applications requiring binary representation
+- Direct bit field extraction (version, variant, timestamp, etc.)
+- Binary format storage or transmission
+- Educational/debugging purposes to visualize UUID structure
+
+**Examples:**
+```typescript
+// String input
+const binary = UUIDv7toBinary('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+console.log(binary?.length);  // 128
+
+// Buffer input  
+const buffer = Buffer.from([0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c, 0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1]);
+UUIDv7toBinary(buffer);  // Same 128-bit binary string
+
+// Extract specific bit fields
+const binaryStr = UUIDv7toBinary('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+if (binaryStr) {
+    const versionBits = binaryStr.substring(48, 52);  // '0111' = version 7
+    const variantBits = binaryStr.substring(64, 66);  // '10' = RFC 4122
+}
+
+// Non-UUIDv7 returns undefined
+UUIDv7toBinary('550e8400-e29b-41d4-a716-446655440000');  // undefined (UUIDv4)
+UUIDv7toBinary('invalid-uuid');  // undefined
+```
 
 ### `dateFromUUIDv7(uuid: string | Buffer): DateFromUUIDv7Result`
 
@@ -180,7 +275,8 @@ uuidVersionValidation('invalid-uuid'); // undefined
 
 ## Buffer Support
 
-As of version 2.3.0, all functions support both string and Buffer inputs:
+**As of version 2.3.0**, all functions support both string and Buffer inputs.
+**As of version 2.4.0**, the new `UUIDv7toBinary` function also supports both input types.
 
 ### Why Buffer Support?
 - **Database Compatibility**: Many databases store UUIDs as binary data (16 bytes)

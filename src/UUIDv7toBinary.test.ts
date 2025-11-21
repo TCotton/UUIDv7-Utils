@@ -320,11 +320,22 @@ describe('UUIDv7toBinary', () => {
     // Create a buffer that represents a valid UUIDv7
     // Format: xxxxxxxx-xxxx-7xxx-yxxx-xxxxxxxxxxxx where y is 8, 9, a, or b
     const buffer = Buffer.from([
-      0xab, 0xcd, 0xef, 0x01, // timestamp high
-      0x23, 0x45, // timestamp mid
-      0x76, 0x78, // version (7) + timestamp low
-      0x9a, 0xbc, // variant (10xx) + clock sequence
-      0xde, 0xf0, 0x12, 0x34, 0x56, 0x78, // node
+      0xab,
+      0xcd,
+      0xef,
+      0x01, // timestamp high
+      0x23,
+      0x45, // timestamp mid
+      0x76,
+      0x78, // version (7) + timestamp low
+      0x9a,
+      0xbc, // variant (10xx) + clock sequence
+      0xde,
+      0xf0,
+      0x12,
+      0x34,
+      0x56,
+      0x78, // node
     ]);
 
     const result = UUIDv7toBinary(buffer);
@@ -341,15 +352,30 @@ describe('UUIDv7toBinary', () => {
   test('should handle buffer longer than 16 bytes by using first 16 bytes', () => {
     // Buffer that's 17 bytes - stringify will only use first 16 bytes
     const longBuffer = Buffer.from([
-      0x01, 0x93, 0x28, 0x20, 0x4b, 0x90, 0x70, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-      0x00, 0xff, // This extra byte is ignored by stringify
+      0x01,
+      0x93,
+      0x28,
+      0x20,
+      0x4b,
+      0x90,
+      0x70,
+      0x00,
+      0x80,
+      0x00,
+      0x00,
+      0x00,
+      0x00,
+      0x00,
+      0x00,
+      0x00,
+      0xff, // This extra byte is ignored by stringify
     ]);
 
     const result = UUIDv7toBinary(longBuffer);
     // Should process the first 16 bytes as a valid UUIDv7
     assert.notStrictEqual(result, undefined);
     assert.strictEqual(result?.length, 128);
-    
+
     // Should match the result from a proper 16-byte buffer
     const properBuffer = Buffer.from([
       0x01, 0x93, 0x28, 0x20, 0x4b, 0x90, 0x70, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
