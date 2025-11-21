@@ -6,6 +6,10 @@ import {
   type UUIDVersionTuple as _UUIDVersionTuple,
   uuidVersionValidation as _uuidVersionValidation,
 } from './uuidVersionValidation.js';
+import {
+  type UUIDv7toBinaryTuple as _UUIDv7toBinaryTuple,
+  UUIDv7toBinary as _UUIDv7toBinary,
+} from './UUIDv7toBinary.js';
 
 /**
  * Extract date information from a UUIDv7.
@@ -33,7 +37,7 @@ export const uuidVersionValidation = _uuidVersionValidation;
  * Return type for dateFromUUIDv7 function.
  *
  * @deprecated CommonJS support is deprecated and will be removed in future versions
- * Please migrate to ES modules: `import { DateFromUUIDv7Result } from 'uuidv7-utilities'`
+ * Please migrate to ES modules: `import type { DateFromUUIDv7Result } from 'uuidv7-utilities'`
  * instead of `const { DateFromUUIDv7Result } = require('uuidv7-utilities')`
  */
 export type DateFromUUIDv7Result = _DateFromUUIDv7Result;
@@ -42,7 +46,25 @@ export type DateFromUUIDv7Result = _DateFromUUIDv7Result;
  * Union type representing possible UUID version identifiers.
  *
  * @deprecated CommonJS support is deprecated and will be removed in future versions
- * Please migrate to ES modules: `import { UUIDVersionTuple } from 'uuidv7-utilities'`
+ * Please migrate to ES modules: `import type { UUIDVersionTuple } from 'uuidv7-utilities'`
  * instead of `const { UUIDVersionTuple } = require('uuidv7-utilities')`
  */
 export type UUIDVersionTuple = _UUIDVersionTuple;
+
+/**
+ * Convert UUIDv7 string to binary representation.
+ *
+ * @deprecated CommonJS support is deprecated and will be removed in future versions
+ * Please migrate to ES modules: `import { UUIDv7toBinary } from 'uuidv7-utilities'`
+ * instead of `const { UUIDv7toBinary } = require('uuidv7-utilities')`
+ */
+export const UUIDv7toBinary = _UUIDv7toBinary;
+
+/**
+ * Tuple type representing binary representation of UUIDv7.
+ *
+ * @deprecated CommonJS support is deprecated and will be removed in future versions
+ * Please migrate to ES modules: `import type { UUIDv7toBinaryTuple } from 'uuidv7-utilities'`
+ * instead of `const { UUIDv7toBinaryTuple } = require('uuidv7-utilities')`
+ */
+export type UUIDv7toBinaryTuple = _UUIDv7toBinaryTuple;
