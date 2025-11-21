@@ -74,7 +74,7 @@ export const UUIDv7toBinary = _UUIDv7toBinary;
 export type UUIDv7toBinaryTuple = _UUIDv7toBinaryTuple;
 
 /**
- * Convert UUIDv7 to unsigned integer representation.
+ * Type representing the return value of UUIDv7toUnsignedInteger.
  *
  * @deprecated CommonJS support is deprecated and will be removed in future versions
  * Please migrate to ES modules: `import type { UUIDv7toUnsignedIntegerType } from 'uuidv7-utilities'`
