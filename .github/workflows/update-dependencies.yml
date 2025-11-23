@@ -64,6 +64,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.check-changes.outputs.changes == 'true'
+        id: create-pr
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -104,3 +105,18 @@ jobs:
             ${{ steps.run-tests.outcome == 'failure' && 
             'dependencies,automated,breaking-changes' || 
             'dependencies,automated' }}
+
+      - name: Checkout PR branch
+        if: steps.check-changes.outputs.changes == 'true' && steps.create-pr.outputs.pull-request-number != ''
+        uses: actions/checkout@v4
+        with:
+          ref: update-dependencies-${{ github.run_number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies on PR branch
+        if: steps.check-changes.outputs.changes == 'true' && steps.create-pr.outputs.pull-request-number != ''
+        run: npm ci
+
+      - name: Run tests on PR branch
+        if: steps.check-changes.outputs.changes == 'true' && steps.create-pr.outputs.pull-request-number != ''
+        run: npm test
