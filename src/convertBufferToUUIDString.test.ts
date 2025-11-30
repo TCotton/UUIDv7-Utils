@@ -114,8 +114,8 @@ describe('convertBufferToUUIDString', () => {
     const result = convertBufferToUUIDString(shortBuffer);
 
     // The stringify function doesn't validate length, so it returns malformed output
-    expect(
-      result).toBe('010203undefined-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
+    expect(result).toBe(
+      '010203undefined-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
     );
 
     // Verify it doesn't match valid UUID format
@@ -128,8 +128,8 @@ describe('convertBufferToUUIDString', () => {
     const result = convertBufferToUUIDString(emptyBuffer);
 
     // The stringify function doesn't validate length, so it returns malformed output with undefined values
-    expect(
-      result).toBe('nan-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
+    expect(result).toBe(
+      'nan-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
     );
 
     // Verify it doesn't match valid UUID format
@@ -370,10 +370,7 @@ describe('convertBufferToUUIDString', () => {
       for (const testCase of versionTestCases) {
         const result = convertBufferToUUIDString(testCase.buffer);
 
-        expect(
-          result).toBe(testCase.expected,
-          `Failed for UUID version ${testCase.version}`
-        );
+        expect(result).toBe(testCase.expected, `Failed for UUID version ${testCase.version}`);
 
         // Verify version bit matches expected version
         assert.strictEqual(
@@ -383,16 +380,16 @@ describe('convertBufferToUUIDString', () => {
         );
 
         // Verify the result follows UUID format
-        expect(
-          result).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+        expect(result).toMatch(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
           `Invalid UUID format for version ${testCase.version}`
         );
 
         // Verify round-trip conversion
         const hexString = result.replace(/-/g, '');
         const reconstructedBuffer = Buffer.from(hexString, 'hex');
-        expect(
-          reconstructedBuffer).toEqual(testCase.buffer,
+        expect(reconstructedBuffer).toEqual(
+          testCase.buffer,
           `Round-trip conversion failed for version ${testCase.version}`
         );
       }
@@ -416,8 +413,8 @@ describe('convertBufferToUUIDString', () => {
         const buffer = Buffer.from(hexString, 'hex');
         const result = convertBufferToUUIDString(buffer);
 
-        expect(
-          result).toBe(testCase.uuid,
+        expect(result).toBe(
+          testCase.uuid,
           `UUID conversion failed for version ${testCase.version}`
         );
 

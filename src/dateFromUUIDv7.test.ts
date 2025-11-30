@@ -244,22 +244,22 @@ describe('dateFromUUIDv7', () => {
       expect(stringResult !== undefined, 'String result should not be undefined').toBeTruthy();
 
       // Results should be identical
-      expect(
-        bufferResult.dateUnixEpoch).toBe(stringResult.dateUnixEpoch,
+      expect(bufferResult.dateUnixEpoch).toBe(
+        stringResult.dateUnixEpoch,
         'Unix epoch should match'
       );
-      expect(
-        bufferResult.dateToIsoString).toBe(stringResult.dateToIsoString,
+      expect(bufferResult.dateToIsoString).toBe(
+        stringResult.dateToIsoString,
         'ISO string should match'
       );
-      expect(
-        bufferResult.dateToUTCString).toBe(stringResult.dateToUTCString,
+      expect(bufferResult.dateToUTCString).toBe(
+        stringResult.dateToUTCString,
         'UTC string should match'
       );
 
       // Verify expected timestamp
-      expect(
-        bufferResult.dateUnixEpoch).toBe(testCase.expectedTimestamp,
+      expect(bufferResult.dateUnixEpoch).toBe(
+        testCase.expectedTimestamp,
         'Should match expected timestamp'
       );
     }

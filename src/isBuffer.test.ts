@@ -28,7 +28,8 @@ describe('isBuffer', () => {
     assert.strictEqual(isBuffer([1, 2, 3]), false);
     expect(isBuffer(new Date())).toBe(false);
     expect(isBuffer(/regex/)).toBe(false);
-    expect(isBuffer(() => {}),
+    expect(
+      isBuffer(() => {}),
       false
     );
   });

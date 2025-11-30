@@ -4,7 +4,7 @@ This project uses Vitest with two different configurations for testing across mu
 
 ## Test Configurations
 
-### 1. Node.js (vitest.config.node.ts)
+### 1. Node.js (vitest.node.config.ts)
 - **Runtime**: Node.js (native)
 - **Environment**: node
 - **Coverage**: Enabled with v8 provider
@@ -13,7 +13,7 @@ This project uses Vitest with two different configurations for testing across mu
 - **UI**: `npm run test:ui`
 - **Coverage**: `npm run test:coverage`
 
-### 2. Bun (vitest.config.bun.ts)
+### 2. Bun (vitest.bun.config.ts)
 - **Runtime**: Bun
 - **Environment**: node (with Bun-specific optimizations)
 - **Pool**: Multi-threaded
@@ -72,8 +72,8 @@ This will open a browser with an interactive test runner interface.
 
 ## Configuration Files
 
-- `vitest.config.node.ts` - Node.js configuration with coverage
-- `vitest.config.bun.ts` - Bun configuration with threading optimizations
+- `vitest.node.config.ts` - Node.js configuration with coverage
+- `vitest.bun.config.ts` - Bun configuration with threading optimizations
 
 ## Migration from Node Test Runner
 
