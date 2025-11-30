@@ -1,5 +1,4 @@
-import assert from 'node:assert';
-import { describe, it } from 'node:test';
+import { describe, it, expect } from 'vitest';
 import { uuidVersionValidation } from './index.js';
 
 describe('uuidVersionValidation', () => {
@@ -12,7 +11,7 @@ describe('uuidVersionValidation', () => {
       'cc864036-b714-11f0-b576-c586e8619134',
     ];
     for (const v1Uuid of v1UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v1Uuid), 'v1');
+      expect(uuidVersionValidation(v1Uuid)).toEqual('v1');
     }
   });
 
@@ -22,7 +21,7 @@ describe('uuidVersionValidation', () => {
       0xcc, 0x86, 0x37, 0x58, 0xb7, 0x14, 0x11, 0xf0, 0xb5, 0x76, 0xc5, 0x86, 0xe8, 0x61, 0x91,
       0x34,
     ]);
-    assert.strictEqual(uuidVersionValidation(v1UuidBuffer), 'v1');
+    expect(uuidVersionValidation(v1UuidBuffer)).toEqual('v1');
   });
 
   it('should return v2 for a version 2 UUID', () => {
@@ -34,7 +33,7 @@ describe('uuidVersionValidation', () => {
       'c5e6f7a8-5b67-21d6-9d56-abcdef789123',
     ];
     for (const v2Uuid of v2UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v2Uuid), 'v2');
+      expect(uuidVersionValidation(v2Uuid)).toEqual('v2');
     }
   });
 
@@ -44,7 +43,7 @@ describe('uuidVersionValidation', () => {
       0xe2, 0xa1, 0xf3, 0xc4, 0x1d, 0x23, 0x21, 0xf2, 0x8f, 0x56, 0xab, 0xcd, 0xef, 0x12, 0x34,
       0x56,
     ]);
-    assert.strictEqual(uuidVersionValidation(v2UuidBuffer), 'v2');
+    expect(uuidVersionValidation(v2UuidBuffer)).toEqual('v2');
   });
 
   it('should return v3 for a version 3 UUID', () => {
@@ -56,7 +55,7 @@ describe('uuidVersionValidation', () => {
       '375c7f49-7604-34e6-bf90-42a8d83affa8',
     ];
     for (const v3Uuid of v3UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v3Uuid), 'v3');
+      expect(uuidVersionValidation(v3Uuid)).toEqual('v3');
     }
   });
 
@@ -65,7 +64,7 @@ describe('uuidVersionValidation', () => {
       0x43, 0x84, 0xb2, 0x7d, 0x26, 0x98, 0x3c, 0xad, 0x8e, 0xcd, 0x2b, 0x80, 0x4a, 0x6d, 0xc8,
       0x03,
     ]);
-    assert.strictEqual(uuidVersionValidation(v3UuidBuffer), 'v3');
+    expect(uuidVersionValidation(v3UuidBuffer)).toEqual('v3');
   });
 
   it('should return v4 for a version 4 UUID', () => {
@@ -77,7 +76,7 @@ describe('uuidVersionValidation', () => {
       'c34b1ed2-90df-45e2-95c3-6c293de72dbe',
     ];
     for (const v4Uuid of v4UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v4Uuid), 'v4');
+      expect(uuidVersionValidation(v4Uuid)).toEqual('v4');
     }
   });
 
@@ -86,7 +85,7 @@ describe('uuidVersionValidation', () => {
       0x8d, 0x5d, 0x59, 0xa0, 0xb6, 0x0b, 0x4e, 0x2b, 0x9d, 0x67, 0x7c, 0x5a, 0xb5, 0x3f, 0x9e,
       0x5b,
     ]);
-    assert.strictEqual(uuidVersionValidation(v4UuidBuffer), 'v4');
+    expect(uuidVersionValidation(v4UuidBuffer)).toEqual('v4');
   });
 
   it('should return v5 for a version 5 UUID', () => {
@@ -98,7 +97,7 @@ describe('uuidVersionValidation', () => {
       '15215d4a-dfdb-5361-a44a-b1d97db0a8b1',
     ];
     for (const v5Uuid of v5UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v5Uuid), 'v5');
+      expect(uuidVersionValidation(v5Uuid)).toEqual('v5');
     }
   });
 
@@ -107,7 +106,7 @@ describe('uuidVersionValidation', () => {
       0xa4, 0xb1, 0x04, 0x51, 0x0b, 0xda, 0x50, 0x91, 0x84, 0xd4, 0x4e, 0xcc, 0xef, 0xb8, 0xbc,
       0x64,
     ]);
-    assert.strictEqual(uuidVersionValidation(v5UuidBuffer), 'v5');
+    expect(uuidVersionValidation(v5UuidBuffer)).toEqual('v5');
   });
 
   it('should return v6 for a version 6 UUID', () => {
@@ -119,7 +118,7 @@ describe('uuidVersionValidation', () => {
       '5e6f7a8b-9c0d-6d1e-94f0-abcdef123456',
     ];
     for (const v6Uuid of v6UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v6Uuid), 'v6');
+      expect(uuidVersionValidation(v6Uuid)).toEqual('v6');
     }
   });
 
@@ -128,7 +127,7 @@ describe('uuidVersionValidation', () => {
       0x1e, 0x2f, 0x3a, 0x4b, 0x5c, 0x6d, 0x6f, 0x78, 0x90, 0xab, 0xcd, 0xef, 0x12, 0x34, 0x56,
       0x78,
     ]);
-    assert.strictEqual(uuidVersionValidation(v6UuidBuffer), 'v6');
+    expect(uuidVersionValidation(v6UuidBuffer)).toEqual('v6');
   });
 
   it('should return v7 for a version 7 UUID', () => {
@@ -140,7 +139,7 @@ describe('uuidVersionValidation', () => {
       '018fd8fd-33e0-7af0-a054-d8e8bcf76e9c',
     ];
     for (const v7Uuid of v7UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v7Uuid), 'v7');
+      expect(uuidVersionValidation(v7Uuid)).toEqual('v7');
     }
   });
 
@@ -149,7 +148,7 @@ describe('uuidVersionValidation', () => {
       0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c, 0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3,
       0xa1,
     ]);
-    assert.strictEqual(uuidVersionValidation(v7UuidBuffer), 'v7');
+    expect(uuidVersionValidation(v7UuidBuffer)).toEqual('v7');
   });
 
   it('should return v8 for a version 8 UUID', () => {
@@ -161,7 +160,7 @@ describe('uuidVersionValidation', () => {
       '1cd508f6-56d7-8e8f-b512-9da7f0b468d2',
     ];
     for (const v8Uuid of v8UuidArray) {
-      assert.strictEqual(uuidVersionValidation(v8Uuid), 'v8');
+      expect(uuidVersionValidation(v8Uuid)).toEqual('v8');
     }
   });
 
@@ -170,7 +169,7 @@ describe('uuidVersionValidation', () => {
       0xd8, 0xa1, 0xc4, 0xe2, 0x12, 0xf3, 0x8a, 0x4b, 0x91, 0xde, 0x5f, 0x63, 0xbc, 0x7a, 0x24,
       0x9e,
     ]);
-    assert.strictEqual(uuidVersionValidation(v8UuidBuffer), 'v8');
+    expect(uuidVersionValidation(v8UuidBuffer)).toEqual('v8');
   });
 
   it('should return NilUUID for the nil UUID', () => {
@@ -182,7 +181,7 @@ describe('uuidVersionValidation', () => {
       '00000000-0000-0000-0000-000000000000',
     ];
     for (const NilUUID of NilUUIDArray) {
-      assert.strictEqual(uuidVersionValidation(NilUUID), 'NilUUID');
+      expect(uuidVersionValidation(NilUUID)).toEqual('NilUUID');
     }
   });
 
@@ -191,7 +190,7 @@ describe('uuidVersionValidation', () => {
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0x00,
     ]);
-    assert.strictEqual(uuidVersionValidation(nilUuidBuffer), 'NilUUID');
+    expect(uuidVersionValidation(nilUuidBuffer)).toEqual('NilUUID');
   });
 
   it('should return MaxUUID for the max UUID', () => {
@@ -203,7 +202,7 @@ describe('uuidVersionValidation', () => {
       'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF',
     ];
     for (const MaxUUID of MaxUUIDArray) {
-      assert.strictEqual(uuidVersionValidation(MaxUUID), 'MaxUUID');
+      expect(uuidVersionValidation(MaxUUID)).toEqual('MaxUUID');
     }
   });
 
@@ -212,7 +211,7 @@ describe('uuidVersionValidation', () => {
       0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
       0xff,
     ]);
-    assert.strictEqual(uuidVersionValidation(maxUuidBuffer), 'MaxUUID');
+    expect(uuidVersionValidation(maxUuidBuffer)).toEqual('MaxUUID');
   });
 
   it('should return undefined for an invalid UUID', () => {
@@ -224,18 +223,18 @@ describe('uuidVersionValidation', () => {
       '018fd8fc-22d1-dfce-b321-4c9Ss2d7bb5fa6',
     ];
     for (const inUiud of invalidUuidArray) {
-      assert.strictEqual(uuidVersionValidation(inUiud), undefined);
+      expect(uuidVersionValidation(inUiud)).toEqual(undefined);
     }
   });
 
   it('should return undefined for malformed buffers', () => {
     // Test with short buffers that will produce malformed strings
     const shortBuffer = Buffer.from([0x01, 0x02, 0x03]);
-    assert.strictEqual(uuidVersionValidation(shortBuffer), undefined);
+    expect(uuidVersionValidation(shortBuffer)).toEqual(undefined);
 
     // Test with empty buffer
     const emptyBuffer = Buffer.alloc(0);
-    assert.strictEqual(uuidVersionValidation(emptyBuffer), undefined);
+    expect(uuidVersionValidation(emptyBuffer)).toEqual(undefined);
   });
 
   it('should handle string vs buffer equivalence for all UUID versions', () => {
@@ -327,17 +326,9 @@ describe('uuidVersionValidation', () => {
       const bufferResult = uuidVersionValidation(testCase.buffer);
       const stringResult = uuidVersionValidation(testCase.string);
 
-      assert.strictEqual(
-        bufferResult,
-        testCase.version,
-        `Buffer test failed for ${testCase.version}`
-      );
-      assert.strictEqual(
-        stringResult,
-        testCase.version,
-        `String test failed for ${testCase.version}`
-      );
-      assert.strictEqual(bufferResult, stringResult, `Results don't match for ${testCase.version}`);
+      expect(bufferResult).toEqual(testCase.version);
+      expect(stringResult).toEqual(testCase.version);
+      expect(bufferResult).toEqual(stringResult);
     }
   });
 });

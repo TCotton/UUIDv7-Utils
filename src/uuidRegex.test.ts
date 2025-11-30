@@ -1,5 +1,4 @@
-import assert from 'node:assert';
-import { describe, it } from 'node:test';
+import { describe, it, expect } from 'vitest';
 import { uuidRegex } from './uuidRegex.js';
 
 describe('uuidRegex', () => {
@@ -15,7 +14,7 @@ describe('uuidRegex', () => {
       'd8a1c4e2-12f3-8a4b-91de-5f63bc7a249e',
     ];
     for (const uuid of validUuids) {
-      assert.notStrictEqual(uuidRegex(uuid), null);
+      expect(uuidRegex(uuid)).not.toEqual(null);
     }
   });
   it('correctly identifies invalid UUIDs', () => {
@@ -27,7 +26,7 @@ describe('uuidRegex', () => {
       'd8a1c4e212f38a4b91de5f63bc7a249e',
     ];
     for (const uuid of invalidUuids) {
-      assert.strictEqual(uuidRegex(uuid), null);
+      expect(uuidRegex(uuid)).toEqual(null);
     }
   });
 });

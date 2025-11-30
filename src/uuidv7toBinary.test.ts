@@ -1,5 +1,4 @@
-import assert from 'node:assert';
-import { describe, test } from 'node:test';
+import { describe, test, expect } from 'vitest';
 import { uuidv7toBinary } from './index.js';
 
 describe('uuidv7toBinary', () => {
@@ -7,9 +6,9 @@ describe('uuidv7toBinary', () => {
     const uuidv7 = '01932820-4b90-7000-8000-000000000000';
     const result = uuidv7toBinary(uuidv7);
 
-    assert.strictEqual(typeof result, 'string');
-    assert.strictEqual(result?.length, 128); // 128 bits for UUID
-    assert.strictEqual(/^[01]+$/.test(result || ''), true); // Only contains 0s and 1s
+    expect(typeof result).toEqual('string');
+    expect(result?.length).toEqual(128); // 128 bits for UUID
+    expect(/^[01]+$/.test(result || '')).toEqual(true); // Only contains 0s and 1s
   });
 
   test('should convert a valid UUIDv7 buffer to binary', () => {
@@ -35,9 +34,9 @@ describe('uuidv7toBinary', () => {
 
     const result = uuidv7toBinary(uuidBuffer);
 
-    assert.strictEqual(typeof result, 'string');
-    assert.strictEqual(result?.length, 128);
-    assert.strictEqual(/^[01]+$/.test(result || ''), true);
+    expect(typeof result).toEqual('string');
+    expect(result?.length).toEqual(128);
+    expect(/^[01]+$/.test(result || '')).toEqual(true);
   });
 
   test('should produce correct binary representation for known UUIDv7', () => {
@@ -53,8 +52,8 @@ describe('uuidv7toBinary', () => {
       '0000000000000000000000000000000000000000000000000111000000000000' + // first 64 bits
       '1000000000000000000000000000000000000000000000000000000000000000'; // last 64 bits
 
-    assert.strictEqual(result, expected);
-    assert.strictEqual(result?.length, 128);
+    expect(result).toEqual(expected);
+    expect(result?.length).toEqual(128);
   });
 
   test('should handle UUIDv7 with all hex characters (0-9, a-f)', () => {
@@ -62,33 +61,33 @@ describe('uuidv7toBinary', () => {
     const result = uuidv7toBinary(uuidv7);
 
     // Should convert each hex digit to 4 binary digits
-    assert.strictEqual(result?.length, 128);
-    assert.strictEqual(/^[01]+$/.test(result || ''), true);
+    expect(result?.length).toEqual(128);
+    expect(/^[01]+$/.test(result || '')).toEqual(true);
   });
 
   test('should handle UUIDv7 with uppercase hex characters', () => {
     const uuidv7 = '01932820-4B90-7000-8000-000000000000';
     const result = uuidv7toBinary(uuidv7);
 
-    assert.strictEqual(typeof result, 'string');
-    assert.strictEqual(result?.length, 128);
-    assert.strictEqual(/^[01]+$/.test(result || ''), true);
+    expect(typeof result).toEqual('string');
+    expect(result?.length).toEqual(128);
+    expect(/^[01]+$/.test(result || '')).toEqual(true);
   });
 
   test('should handle UUIDv7 with mixed case hex characters', () => {
     const uuidv7 = '01932820-4b90-7AbC-8DeF-0123456789Aa';
     const result = uuidv7toBinary(uuidv7);
 
-    assert.strictEqual(typeof result, 'string');
-    assert.strictEqual(result?.length, 128);
-    assert.strictEqual(/^[01]+$/.test(result || ''), true);
+    expect(typeof result).toEqual('string');
+    expect(result?.length).toEqual(128);
+    expect(/^[01]+$/.test(result || '')).toEqual(true);
   });
 
   test('should return undefined for invalid UUID format', () => {
     const invalidUuid = 'not-a-valid-uuid';
     const result = uuidv7toBinary(invalidUuid);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for non-UUIDv7 (wrong version)', () => {
@@ -96,90 +95,90 @@ describe('uuidv7toBinary', () => {
     const uuidv4 = '550e8400-e29b-41d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv4);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv1', () => {
     const uuidv1 = '550e8400-e29b-11d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv1);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv3', () => {
     const uuidv3 = '550e8400-e29b-31d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv3);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv4', () => {
     const uuidv4 = '550e8400-e29b-41d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv4);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv5', () => {
     const uuidv5 = '550e8400-e29b-51d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv5);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv6', () => {
     const uuidv6 = '550e8400-e29b-61d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv6);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv8', () => {
     const uuidv8 = '550e8400-e29b-81d4-a716-446655440000';
     const result = uuidv7toBinary(uuidv8);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for empty string', () => {
     const result = uuidv7toBinary('');
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for malformed UUID string', () => {
     const malformed = '01932820-4b90-7000-8000';
     const result = uuidv7toBinary(malformed);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUID with invalid characters', () => {
     const invalidChars = '0193282g-4b90-7000-8000-000000000000';
     const result = uuidv7toBinary(invalidChars);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUID with wrong hyphen positions', () => {
     const wrongHyphens = '019328204-b907-0008-0000-00000000000';
     const result = uuidv7toBinary(wrongHyphens);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for non-16-byte buffer', () => {
     const shortBuffer = Buffer.from([0x01, 0x93, 0x28, 0x20]);
     const result = uuidv7toBinary(shortBuffer);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for empty buffer', () => {
     const emptyBuffer = Buffer.from([]);
     const result = uuidv7toBinary(emptyBuffer);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for non-UUIDv7 buffer (version 4)', () => {
@@ -190,7 +189,7 @@ describe('uuidv7toBinary', () => {
     ]);
     const result = uuidv7toBinary(uuidv4Buffer);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should be consistent with multiple calls for the same UUIDv7', () => {
@@ -200,8 +199,8 @@ describe('uuidv7toBinary', () => {
     const result2 = uuidv7toBinary(uuidv7);
     const result3 = uuidv7toBinary(uuidv7);
 
-    assert.strictEqual(result1, result2);
-    assert.strictEqual(result2, result3);
+    expect(result1).toEqual(result2);
+    expect(result2).toEqual(result3);
   });
 
   test('should handle string vs buffer equivalence for UUIDv7', () => {
@@ -214,15 +213,15 @@ describe('uuidv7toBinary', () => {
     const resultString = uuidv7toBinary(uuidString);
     const resultBuffer = uuidv7toBinary(uuidBuffer);
 
-    assert.strictEqual(resultString, resultBuffer);
+    expect(resultString).toEqual(resultBuffer);
   });
 
   test('should verify binary has correct structure for UUIDv7', () => {
     const uuidv7 = '01932820-4b90-7def-8123-456789abcdef';
     const result = uuidv7toBinary(uuidv7);
 
-    assert.notStrictEqual(result, undefined);
-    assert.strictEqual(result?.length, 128);
+    expect(result).not.toEqual(undefined);
+    expect(result?.length).toEqual(128);
 
     // Version 7 should have version bits set correctly
     // In the UUID format, the version is at position 14 (with hyphens)
@@ -231,14 +230,14 @@ describe('uuidv7toBinary', () => {
     // 7 in hex = 0111 in binary
     // This appears at bits 48-51 (positions 12*4 to 13*4-1)
     const versionBits = result?.substring(48, 52);
-    assert.strictEqual(versionBits, '0111');
+    expect(versionBits).toEqual('0111');
   });
 
   test('should verify variant bits for UUIDv7', () => {
     const uuidv7 = '01932820-4b90-7def-8123-456789abcdef';
     const result = uuidv7toBinary(uuidv7);
 
-    assert.notStrictEqual(result, undefined);
+    expect(result).not.toEqual(undefined);
 
     // Variant bits are in the first 2 bits of the 9th byte
     // After removing hyphens: 019328204b907def8123456789abcdef
@@ -246,7 +245,7 @@ describe('uuidv7toBinary', () => {
     // 8 in hex = 1000 in binary
     // Bits 64-65 should be '10' for RFC 4122 variant
     const variantBits = result?.substring(64, 66);
-    assert.strictEqual(variantBits, '10');
+    expect(variantBits).toEqual('10');
   });
 
   test('should handle real-world UUIDv7 examples', () => {
@@ -260,13 +259,13 @@ describe('uuidv7toBinary', () => {
     for (const uuid of examples) {
       const result = uuidv7toBinary(uuid);
 
-      assert.notStrictEqual(result, undefined);
-      assert.strictEqual(result?.length, 128);
-      assert.strictEqual(/^[01]+$/.test(result || ''), true);
+      expect(result).not.toEqual(undefined);
+      expect(result?.length).toEqual(128);
+      expect(/^[01]+$/.test(result || '')).toEqual(true);
 
       // Verify version bits
       const versionBits = result?.substring(48, 52);
-      assert.strictEqual(versionBits, '0111');
+      expect(versionBits).toEqual('0111');
     }
   });
 
@@ -274,14 +273,14 @@ describe('uuidv7toBinary', () => {
     const specialChars = '!@#$%^&*()';
     const result = uuidv7toBinary(specialChars);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for string with spaces', () => {
     const withSpaces = '01932820 4b90 7000 8000 000000000000';
     const result = uuidv7toBinary(withSpaces);
 
-    assert.strictEqual(result, undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should verify binary output length is always 128 bits for valid UUIDv7', () => {
@@ -294,7 +293,7 @@ describe('uuidv7toBinary', () => {
 
     for (const uuid of validUUIDs) {
       const result = uuidv7toBinary(uuid);
-      assert.strictEqual(result?.length, 128);
+      expect(result?.length).toEqual(128);
     }
   });
 
@@ -304,16 +303,16 @@ describe('uuidv7toBinary', () => {
     const uuidv7 = 'abcdef01-2345-7678-9abc-def012345678';
     const result = uuidv7toBinary(uuidv7);
 
-    assert.notStrictEqual(result, undefined);
+    expect(result).not.toEqual(undefined);
 
     // Verify 'a' at position 0 converts to '1010'
-    assert.strictEqual(result?.substring(0, 4), '1010');
+    expect(result?.substring(0, 4)).toEqual('1010');
 
     // Verify 'b' at position 1 converts to '1011'
-    assert.strictEqual(result?.substring(4, 8), '1011');
+    expect(result?.substring(4, 8)).toEqual('1011');
 
     // Verify 'f' at position 5 converts to '1111'
-    assert.strictEqual(result?.substring(20, 24), '1111');
+    expect(result?.substring(20, 24)).toEqual('1111');
   });
 
   test('should handle buffer with version 7 correctly', () => {
@@ -340,13 +339,13 @@ describe('uuidv7toBinary', () => {
 
     const result = uuidv7toBinary(buffer);
 
-    assert.notStrictEqual(result, undefined);
-    assert.strictEqual(result?.length, 128);
+    expect(result).not.toEqual(undefined);
+    expect(result?.length).toEqual(128);
 
     // Verify it matches the string conversion
     const stringUuid = 'abcdef01-2345-7678-9abc-def012345678';
     const stringResult = uuidv7toBinary(stringUuid);
-    assert.strictEqual(result, stringResult);
+    expect(result).toEqual(stringResult);
   });
 
   test('should handle buffer longer than 16 bytes by using first 16 bytes', () => {
@@ -373,8 +372,8 @@ describe('uuidv7toBinary', () => {
 
     const result = uuidv7toBinary(longBuffer);
     // Should process the first 16 bytes as a valid UUIDv7
-    assert.notStrictEqual(result, undefined);
-    assert.strictEqual(result?.length, 128);
+    expect(result).not.toEqual(undefined);
+    expect(result?.length).toEqual(128);
 
     // Should match the result from a proper 16-byte buffer
     const properBuffer = Buffer.from([
@@ -382,7 +381,7 @@ describe('uuidv7toBinary', () => {
       0x00,
     ]);
     const expectedResult = uuidv7toBinary(properBuffer);
-    assert.strictEqual(result, expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('should handle UUIDv7 with different valid variant bits', () => {
@@ -396,12 +395,12 @@ describe('uuidv7toBinary', () => {
 
     for (const uuid of variants) {
       const result = uuidv7toBinary(uuid);
-      assert.notStrictEqual(result, undefined);
-      assert.strictEqual(result?.length, 128);
+      expect(result).not.toEqual(undefined);
+      expect(result?.length).toEqual(128);
 
       // All should start with '10' for variant
       const variantBits = result?.substring(64, 66);
-      assert.strictEqual(variantBits, '10');
+      expect(variantBits).toEqual('10');
     }
   });
 });
