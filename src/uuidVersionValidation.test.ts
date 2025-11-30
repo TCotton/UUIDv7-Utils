@@ -326,9 +326,9 @@ describe('uuidVersionValidation', () => {
       const bufferResult = uuidVersionValidation(testCase.buffer);
       const stringResult = uuidVersionValidation(testCase.string);
 
-      expect(bufferResult).toBe(testCase.version, `Buffer test failed for ${testCase.version}`);
-      expect(stringResult).toBe(testCase.version, `String test failed for ${testCase.version}`);
-      expect(bufferResult).toBe(stringResult, `Results don't match for ${testCase.version}`);
+      expect(bufferResult).toBe(testCase.version);
+      expect(stringResult).toBe(testCase.version);
+      expect(bufferResult).toBe(stringResult);
     }
   });
 });

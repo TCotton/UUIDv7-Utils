@@ -312,7 +312,7 @@ describe('uuidv7toBinary', () => {
     expect(result?.substring(4, 8)).toBe('1011');
 
     // Verify 'f' at position 5 converts to '1111'
-    assert.strictEqual(result?.substring(20, 24), '1111');
+    expect(result?.substring(20, 24)).toBe('1111');
   });
 
   test('should handle buffer with version 7 correctly', () => {

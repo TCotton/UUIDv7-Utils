@@ -409,10 +409,7 @@ describe('convertBufferToUUIDString', () => {
         const buffer = Buffer.from(hexString, 'hex');
         const result = convertBufferToUUIDString(buffer);
 
-        expect(result).toBe(
-          testCase.uuid,
-          `UUID conversion failed for version ${testCase.version}`
-        );
+        expect(result).toBe(testCase.uuid);
 
         // Check variant bits (bits 6-7 of byte 8, should be '10' for RFC 4122 UUIDs)
         const variantChar = result.charAt(19); // First character of 4th group

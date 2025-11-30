@@ -25,13 +25,10 @@ describe('isBuffer', () => {
     expect(isBuffer(undefined)).toBe(false);
     expect(isBuffer({})).toBe(false);
     expect(isBuffer([])).toBe(false);
-    assert.strictEqual(isBuffer([1, 2, 3]), false);
+    expect(isBuffer([1, 2, 3])).toBe(false);
     expect(isBuffer(new Date())).toBe(false);
     expect(isBuffer(/regex/)).toBe(false);
-    expect(
-      isBuffer(() => {}),
-      false
-    );
+    expect(isBuffer(() => {})).toBe(false);
   });
 
   it('should return false for Uint8Array (which is similar to Buffer but not a Buffer)', () => {
