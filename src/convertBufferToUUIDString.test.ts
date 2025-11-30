@@ -370,15 +370,13 @@ describe('convertBufferToUUIDString', () => {
       for (const testCase of versionTestCases) {
         const result = convertBufferToUUIDString(testCase.buffer);
 
-        expect(result).toBe(testCase.expected);
+        expect(result).toEqual(testCase.expected);
 
         // Verify version bit matches expected version
-        expect(result.charAt(14)).toBe(testCase.version.toString());
+        expect(result.charAt(14)).toEqual(testCase.version.toString());
 
         // Verify the result follows UUID format
-        expect(result).toMatch(
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
-        );
+        expect(result).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
         // Verify round-trip conversion
         const hexString = result.replace(/-/g, '');
@@ -410,7 +408,7 @@ describe('convertBufferToUUIDString', () => {
         // Check variant bits (bits 6-7 of byte 8, should be '10' for RFC 4122 UUIDs)
         const variantChar = result.charAt(19); // First character of 4th group
         const variantByte = parseInt(variantChar, 16);
-        expect((variantByte & 0x8) !== 0 && (variantByte & 0x4)).toEqual(0)
+        expect((variantByte & 0x8) !== 0 && variantByte & 0x4).toEqual(0);
       }
     });
   });
