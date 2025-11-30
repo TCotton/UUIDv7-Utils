@@ -5,6 +5,84 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2025-11-30
+
+### Changed
+- **Test Framework Migration**: Migrated from Node.js native test runner to Vitest
+  - Converted all test files from Node.js `assert` to Vitest `expect` syntax
+  - Migrated 199 tests across 10 test files with 100% pass rate
+  - Replaced `import assert from 'node:assert'` with Vitest's `expect` API
+  - Updated all assertion patterns:
+    - `assert.strictEqual()` → `expect().toBe()`
+    - `assert.deepStrictEqual()` → `expect().toEqual()`
+    - `assert.ok()` → `expect().toBeTruthy()`
+    - `assert.match()` → `expect().toMatch()`
+    - `assert.doesNotMatch()` → `expect().not.toMatch()`
+    - `assert.notStrictEqual()` → `expect().not.toBe()`
+    - `assert.fail()` → `expect.fail()`
+
+- **Multi-Runtime Testing Support**: Added dual-runtime test configurations
+  - Node.js runtime: Full test suite with v8 coverage provider (199/199 tests passing)
+  - Bun runtime: Multi-threaded test execution with optimizations (199/199 tests passing)
+  - Removed browser testing support (previously partial - 64/199 tests)
+
+- **Package Configuration Updates**:
+  - Added `"type": "module"` to package.json for proper ES module support
+  - Simplified test scripts to use Vitest directly
+  - Removed browser-specific dependencies (@vitest/browser, playwright, buffer)
+  - Updated devDependencies: vitest@^2.1.8, @vitest/ui@^2.1.8, vite@^6.0.3
+
+- **Test Configurations**:
+  - `vitest.node.config.ts`: Node.js environment with coverage support
+  - `vitest.bun.config.ts`: Bun runtime with thread pool optimizations
+  - Both configs include 10-second timeout and comprehensive glob patterns
+
+- **GitHub Actions Integration**:
+  - Added Bun installation step to CI/CD pipeline
+  - Added Bun setup to dependency update workflow
+  - Both workflows now run tests against Node.js and Bun runtimes
+
+### Added
+- **Vitest Configuration Files**:
+  - `vitest.node.config.ts` - Node.js runtime configuration with v8 coverage
+  - `vitest.bun.config.ts` - Bun runtime configuration with threading
+- **Documentation**:
+  - `VITEST_SETUP.md` - Comprehensive testing setup and migration guide
+  - Documents configuration files, running tests, coverage, watch mode, and UI mode
+  - Includes migration notes from Node.js test runner
+
+### Removed
+- Browser testing configuration and dependencies
+  - Removed `vitest.config.browser.ts`
+  - Removed `vitest.setup.browser.ts`
+  - Removed `@vitest/browser` package
+  - Removed `playwright` package
+  - Removed `buffer` polyfill package
+
+### Technical Details
+- **Test Suite Statistics**: 199 total tests across 10 test files
+- **Test Files Converted**:
+  - dateFromUUIDv7.test.ts
+  - uuidVersionValidation.test.ts
+  - uuidRegex.test.ts
+  - isBuffer.test.ts
+  - convertBufferToUUIDString.test.ts
+  - stringify.test.ts
+  - handleBuffer.test.ts
+  - uuidv7toBinary.test.ts
+  - uuidv7toUnsignedInteger.test.ts
+  - uuidv7withURNWrapper.test.ts
+
+### Migration Impact
+- **Fully Backward Compatible**: No changes to library functionality or public API
+- **Testing Only**: All changes are internal to the development and testing infrastructure
+- **Improved Developer Experience**: 
+  - Faster test execution with Vitest
+  - Better test output and error messages
+  - Multi-runtime validation (Node.js and Bun)
+  - Interactive UI mode available (`npm run test:ui`)
+  - Watch mode for development (`npm run test:watch`)
+
 ## [3.0.0] - 2025-11-21
 
 ### Changed - BREAKING CHANGES ⚠️
