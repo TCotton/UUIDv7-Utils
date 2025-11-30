@@ -1,68 +1,67 @@
-import assert from 'node:assert';
-import { describe, it } from 'node:test';
+import { describe, it, expect } from 'vitest';
 import { dateFromUUIDv7 } from './index.js';
 
 describe('dateFromUUIDv7', () => {
   it('returns undefined for invalid UUID format', () => {
     // Test string with non-hex characters
     const notAHex = 'not-a-hex';
-    assert.strictEqual(dateFromUUIDv7(notAHex), undefined);
+    expect(dateFromUUIDv7(notAHex)).toBe(undefined);
 
     // Test string with special characters
     const specialChars = '!@#$%^&*()';
-    assert.strictEqual(dateFromUUIDv7(specialChars), undefined);
+    expect(dateFromUUIDv7(specialChars)).toBe(undefined);
 
     // Test string with spaces
     const withSpaces = '123 456 789';
-    assert.strictEqual(dateFromUUIDv7(withSpaces), undefined);
+    expect(dateFromUUIDv7(withSpaces)).toBe(undefined);
 
     // Test string with letters outside hex range (g-z)
     const nonHexLetters = 'ghijklmnopqrstuvwxyz';
-    assert.strictEqual(dateFromUUIDv7(nonHexLetters), undefined);
+    expect(dateFromUUIDv7(nonHexLetters)).toBe(undefined);
 
     // Test string with mixed valid hex and invalid characters
     const mixedChars = '123abc-xyz-789';
-    assert.strictEqual(dateFromUUIDv7(mixedChars), undefined);
+    expect(dateFromUUIDv7(mixedChars)).toBe(undefined);
 
     // Test empty string
     const emptyString = '';
-    assert.strictEqual(dateFromUUIDv7(emptyString), undefined);
+    expect(dateFromUUIDv7(emptyString)).toBe(undefined);
 
     // Test string with only spaces
     const onlySpaces = '   ';
-    assert.strictEqual(dateFromUUIDv7(onlySpaces), undefined);
+    expect(dateFromUUIDv7(onlySpaces)).toBe(undefined);
 
     // Test string with newlines and tabs
     const whitespace = 'abc\n123\t456';
-    assert.strictEqual(dateFromUUIDv7(whitespace), undefined);
+    expect(dateFromUUIDv7(whitespace)).toBe(undefined);
 
     // Test string with unicode characters
     const unicode = '123αβγ456';
-    assert.strictEqual(dateFromUUIDv7(unicode), undefined);
+    expect(dateFromUUIDv7(unicode)).toBe(undefined);
 
     // Test string with emojis
     const emojis = '123🚀456🎉';
-    assert.strictEqual(dateFromUUIDv7(emojis), undefined);
+    expect(dateFromUUIDv7(emojis)).toBe(undefined);
 
     // Test string with numbers and punctuation
     const numbersAndPunctuation = '123.456,789';
-    assert.strictEqual(dateFromUUIDv7(numbersAndPunctuation), undefined);
+    expect(dateFromUUIDv7(numbersAndPunctuation)).toBe(undefined);
 
     // Test string with uppercase and lowercase mixed with invalid chars
     const mixedCase = 'AbC123XyZ';
-    assert.strictEqual(dateFromUUIDv7(mixedCase), undefined);
+    expect(dateFromUUIDv7(mixedCase)).toBe(undefined);
 
     // Test string that looks like UUID but has invalid characters
     const fakeUuid = '018cc251-f400-7000-8000-00000000000g';
-    assert.strictEqual(dateFromUUIDv7(fakeUuid), undefined);
+    expect(dateFromUUIDv7(fakeUuid)).toBe(undefined);
 
     // Test string with underscores
     const withUnderscores = '123_abc_def';
-    assert.strictEqual(dateFromUUIDv7(withUnderscores), undefined);
+    expect(dateFromUUIDv7(withUnderscores)).toBe(undefined);
 
     // Test string with plus and minus signs
     const withSigns = '+123-abc';
-    assert.strictEqual(dateFromUUIDv7(withSigns), undefined);
+    expect(dateFromUUIDv7(withSigns)).toBe(undefined);
   });
 
   it('returns undefined for UUIDs that are not version 7', () => {
@@ -76,7 +75,7 @@ describe('dateFromUUIDv7', () => {
 
     // Test each UUID v1 in the array
     for (const v1Uuid of v1UuidArray) {
-      assert.strictEqual(dateFromUUIDv7(v1Uuid), undefined);
+      expect(dateFromUUIDv7(v1Uuid)).toBe(undefined);
     }
 
     const v2UuidArray = [
@@ -89,7 +88,7 @@ describe('dateFromUUIDv7', () => {
 
     // Test each UUID v2 in the array
     for (const v2Uuid of v2UuidArray) {
-      assert.strictEqual(dateFromUUIDv7(v2Uuid), undefined);
+      expect(dateFromUUIDv7(v2Uuid)).toBe(undefined);
     }
 
     const v3UuidArray = [
@@ -102,7 +101,7 @@ describe('dateFromUUIDv7', () => {
 
     // Test each UUID v3 in the array
     for (const v3Uuid of v3UuidArray) {
-      assert.strictEqual(dateFromUUIDv7(v3Uuid), undefined);
+      expect(dateFromUUIDv7(v3Uuid)).toBe(undefined);
     }
 
     const v4UuidArray = [
@@ -115,7 +114,7 @@ describe('dateFromUUIDv7', () => {
 
     // Test each UUID v4 in the array
     for (const v4Uuid of v4UuidArray) {
-      assert.strictEqual(dateFromUUIDv7(v4Uuid), undefined);
+      expect(dateFromUUIDv7(v4Uuid)).toBe(undefined);
     }
 
     const v5UuidArray = [
@@ -128,7 +127,7 @@ describe('dateFromUUIDv7', () => {
 
     // Test each UUID v5 in the array
     for (const v5Uuid of v5UuidArray) {
-      assert.strictEqual(dateFromUUIDv7(v5Uuid), undefined);
+      expect(dateFromUUIDv7(v5Uuid)).toBe(undefined);
     }
 
     const v6UuidArray = [
@@ -141,7 +140,7 @@ describe('dateFromUUIDv7', () => {
 
     // Test each UUID v6 in the array
     for (const v6Uuid of v6UuidArray) {
-      assert.strictEqual(dateFromUUIDv7(v6Uuid), undefined);
+      expect(dateFromUUIDv7(v6Uuid)).toBe(undefined);
     }
   });
 
@@ -149,11 +148,11 @@ describe('dateFromUUIDv7', () => {
     const uuidv7 = '018fd8fa-02d5-7c9a-8fb9-45d938b8f091';
     const result = dateFromUUIDv7(uuidv7);
 
-    assert.ok(result !== undefined);
-    assert.ok(typeof result === 'object');
-    assert.ok('dateToIsoString' in result);
-    assert.ok('dateUnixEpoch' in result);
-    assert.ok('dateToUTCString' in result);
+    expect(result !== undefined).toBeTruthy();
+    expect(typeof result === 'object').toBeTruthy();
+    expect('dateToIsoString' in result).toBeTruthy();
+    expect('dateUnixEpoch' in result).toBeTruthy();
+    expect('dateToUTCString' in result).toBeTruthy();
   });
 
   it('returns a date object for valid UUIDv7 buffers', () => {
@@ -164,16 +163,16 @@ describe('dateFromUUIDv7', () => {
     ]);
     const result = dateFromUUIDv7(uuidv7Buffer);
 
-    assert.ok(result !== undefined);
-    assert.ok(typeof result === 'object');
-    assert.ok('dateToIsoString' in result);
-    assert.ok('dateUnixEpoch' in result);
-    assert.ok('dateToUTCString' in result);
+    expect(result !== undefined).toBeTruthy();
+    expect(typeof result === 'object').toBeTruthy();
+    expect('dateToIsoString' in result).toBeTruthy();
+    expect('dateUnixEpoch' in result).toBeTruthy();
+    expect('dateToUTCString' in result).toBeTruthy();
 
     // Verify the timestamp matches expected value
-    assert.strictEqual(result.dateUnixEpoch, 1717332184064);
-    assert.strictEqual(result.dateToIsoString, '2024-06-02T12:43:04.064Z');
-    assert.strictEqual(result.dateToUTCString, 'Sun, 02 Jun 2024 12:43:04 GMT');
+    expect(result.dateUnixEpoch).toBe(1717332184064);
+    expect(result.dateToIsoString).toBe('2024-06-02T12:43:04.064Z');
+    expect(result.dateToUTCString).toBe('Sun, 02 Jun 2024 12:43:04 GMT');
   });
 
   it('returns undefined for non-UUIDv7 buffers', () => {
@@ -182,30 +181,30 @@ describe('dateFromUUIDv7', () => {
       0x8d, 0x5d, 0x59, 0xa0, 0xb6, 0x0b, 0x4e, 0x2b, 0x9d, 0x67, 0x7c, 0x5a, 0xb5, 0x3f, 0x9e,
       0x5b,
     ]);
-    assert.strictEqual(dateFromUUIDv7(v4Buffer), undefined);
+    expect(dateFromUUIDv7(v4Buffer)).toBe(undefined);
 
     // UUIDv1 buffer
     const v1Buffer = Buffer.from([
       0xcc, 0x86, 0x37, 0x58, 0xb7, 0x14, 0x11, 0xf0, 0xb5, 0x76, 0xc5, 0x86, 0xe8, 0x61, 0x91,
       0x34,
     ]);
-    assert.strictEqual(dateFromUUIDv7(v1Buffer), undefined);
+    expect(dateFromUUIDv7(v1Buffer)).toBe(undefined);
   });
 
   it('returns undefined for malformed buffers', () => {
     // Short buffer
     const shortBuffer = Buffer.from([0x01, 0x02, 0x03]);
-    assert.strictEqual(dateFromUUIDv7(shortBuffer), undefined);
+    expect(dateFromUUIDv7(shortBuffer)).toBe(undefined);
 
     // Empty buffer
     const emptyBuffer = Buffer.alloc(0);
-    assert.strictEqual(dateFromUUIDv7(emptyBuffer), undefined);
+    expect(dateFromUUIDv7(emptyBuffer)).toBe(undefined);
 
     // Buffer with invalid content that won't form valid UUID
     const invalidBuffer = Buffer.from([
       0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
     ]);
-    assert.strictEqual(dateFromUUIDv7(invalidBuffer), undefined);
+    expect(dateFromUUIDv7(invalidBuffer)).toBe(undefined);
   });
 
   it('should handle string vs buffer equivalence for UUIDv7', () => {
@@ -241,30 +240,26 @@ describe('dateFromUUIDv7', () => {
       const stringResult = dateFromUUIDv7(testCase.string);
 
       // Both should return valid results
-      assert.ok(bufferResult !== undefined, 'Buffer result should not be undefined');
-      assert.ok(stringResult !== undefined, 'String result should not be undefined');
+      expect(bufferResult !== undefined, 'Buffer result should not be undefined').toBeTruthy();
+      expect(stringResult !== undefined, 'String result should not be undefined').toBeTruthy();
 
       // Results should be identical
-      assert.strictEqual(
-        bufferResult.dateUnixEpoch,
-        stringResult.dateUnixEpoch,
+      expect(
+        bufferResult.dateUnixEpoch).toBe(stringResult.dateUnixEpoch,
         'Unix epoch should match'
       );
-      assert.strictEqual(
-        bufferResult.dateToIsoString,
-        stringResult.dateToIsoString,
+      expect(
+        bufferResult.dateToIsoString).toBe(stringResult.dateToIsoString,
         'ISO string should match'
       );
-      assert.strictEqual(
-        bufferResult.dateToUTCString,
-        stringResult.dateToUTCString,
+      expect(
+        bufferResult.dateToUTCString).toBe(stringResult.dateToUTCString,
         'UTC string should match'
       );
 
       // Verify expected timestamp
-      assert.strictEqual(
-        bufferResult.dateUnixEpoch,
-        testCase.expectedTimestamp,
+      expect(
+        bufferResult.dateUnixEpoch).toBe(testCase.expectedTimestamp,
         'Should match expected timestamp'
       );
     }
@@ -275,17 +270,17 @@ describe('dateFromUUIDv7', () => {
     const result = dateFromUUIDv7(uuidv7);
 
     // Test that it returns the correct object structure
-    assert.ok(result !== undefined);
-    assert.ok(typeof result === 'object');
+    expect(result !== undefined).toBeTruthy();
+    expect(typeof result === 'object').toBeTruthy();
 
     // Test the timestamp value
-    assert.strictEqual(result?.dateUnixEpoch, 1717332214485);
+    expect(result?.dateUnixEpoch).toBe(1717332214485);
 
     // Test the ISO string representation
-    assert.strictEqual(result?.dateToIsoString, '2024-06-02T12:43:34.485Z');
+    expect(result?.dateToIsoString).toBe('2024-06-02T12:43:34.485Z');
 
     // Test the UTC string representation
-    assert.strictEqual(result?.dateToUTCString, 'Sun, 02 Jun 2024 12:43:34 GMT');
+    expect(result?.dateToUTCString).toBe('Sun, 02 Jun 2024 12:43:34 GMT');
   });
 
   it('returns a Date object for valid UUIDv7 in an array and correct timestamp extraction', () => {
@@ -327,17 +322,17 @@ describe('dateFromUUIDv7', () => {
       const result = dateFromUUIDv7(testCase.uuid);
 
       // Test that it returns the correct object structure
-      assert.ok(result !== undefined);
-      assert.ok(typeof result === 'object');
+      expect(result !== undefined).toBeTruthy();
+      expect(typeof result === 'object').toBeTruthy();
 
       // Test that the timestamp is extracted correctly
-      assert.strictEqual(result?.dateUnixEpoch, testCase.expectedTimestamp);
+      expect(result?.dateUnixEpoch).toBe(testCase.expectedTimestamp);
 
       // Test the ISO string representation
-      assert.strictEqual(result?.dateToIsoString, testCase.expectedISO);
+      expect(result?.dateToIsoString).toBe(testCase.expectedISO);
 
       // Test the UTC string representation
-      assert.strictEqual(result?.dateToUTCString, testCase.expectedUTC);
+      expect(result?.dateToUTCString).toBe(testCase.expectedUTC);
     }
   });
 });
