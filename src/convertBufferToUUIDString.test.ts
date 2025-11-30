@@ -370,24 +370,20 @@ describe('convertBufferToUUIDString', () => {
       for (const testCase of versionTestCases) {
         const result = convertBufferToUUIDString(testCase.buffer);
 
-        expect(result).toBe(testCase.expected, `Failed for UUID version ${testCase.version}`);
+        expect(result).toBe(testCase.expected);
 
         // Verify version bit matches expected version
         expect(result.charAt(14)).toBe(testCase.version.toString());
 
         // Verify the result follows UUID format
         expect(result).toMatch(
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
-          `Invalid UUID format for version ${testCase.version}`
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
         );
 
         // Verify round-trip conversion
         const hexString = result.replace(/-/g, '');
         const reconstructedBuffer = Buffer.from(hexString, 'hex');
-        expect(reconstructedBuffer).toEqual(
-          testCase.buffer,
-          `Round-trip conversion failed for version ${testCase.version}`
-        );
+        expect(reconstructedBuffer).toEqual(testCase.buffer);
       }
     });
 
