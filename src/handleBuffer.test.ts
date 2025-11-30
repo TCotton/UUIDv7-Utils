@@ -24,16 +24,16 @@ describe('handleBuffer', () => {
     ]);
 
     const result = handleBuffer(uuidBuffer);
-    expect(result).toBe('01932820-4b90-7000-8000-000000000000');
-    expect(typeof result).toBe('string');
+    expect(result).toEqual('01932820-4b90-7000-8000-000000000000');
+    expect(typeof result).toEqual('string');
   });
 
   test('should return string input unchanged', () => {
     const uuidString = '01932820-4b90-7000-8000-000000000000';
 
     const result = handleBuffer(uuidString);
-    expect(result).toBe(uuidString);
-    expect(typeof result).toBe('string');
+    expect(result).toEqual(uuidString);
+    expect(typeof result).toEqual('string');
   });
 
   test('should handle nil UUID buffer (all zeros)', () => {
@@ -43,7 +43,7 @@ describe('handleBuffer', () => {
     ]);
 
     const result = handleBuffer(nilUuidBuffer);
-    expect(result).toBe('00000000-0000-0000-0000-000000000000');
+    expect(result).toEqual('00000000-0000-0000-0000-000000000000');
   });
 
   test('should handle max UUID buffer (all 0xFF)', () => {
@@ -53,7 +53,7 @@ describe('handleBuffer', () => {
     ]);
 
     const result = handleBuffer(maxUuidBuffer);
-    expect(result).toBe('ffffffff-ffff-ffff-ffff-ffffffffffff');
+    expect(result).toEqual('ffffffff-ffff-ffff-ffff-ffffffffffff');
   });
 
   test('should handle different UUID versions as buffers', () => {
@@ -64,29 +64,29 @@ describe('handleBuffer', () => {
     ]);
 
     const result = handleBuffer(uuidv4Buffer);
-    expect(result).toBe('12345678-9abc-4def-8012-3456789abcde');
+    expect(result).toEqual('12345678-9abc-4def-8012-3456789abcde');
   });
 
   test('should handle empty string input', () => {
     const result = handleBuffer('');
-    expect(result).toBe('');
-    expect(typeof result).toBe('string');
+    expect(result).toEqual('');
+    expect(typeof result).toEqual('string');
   });
 
   test('should handle non-UUID string input', () => {
     const nonUuidString = 'hello-world-this-is-not-a-uuid';
 
     const result = handleBuffer(nonUuidString);
-    expect(result).toBe(nonUuidString);
-    expect(typeof result).toBe('string');
+    expect(result).toEqual(nonUuidString);
+    expect(typeof result).toEqual('string');
   });
 
   test('should handle malformed UUID string input', () => {
     const malformedUuid = '12345678-9abc-4def-80';
 
     const result = handleBuffer(malformedUuid);
-    expect(result).toBe(malformedUuid);
-    expect(typeof result).toBe('string');
+    expect(result).toEqual(malformedUuid);
+    expect(typeof result).toEqual('string');
   });
 
   test('should convert buffer created from existing UUID string', () => {
@@ -97,7 +97,7 @@ describe('handleBuffer', () => {
     const buffer = Buffer.from(hex, 'hex');
 
     const result = handleBuffer(buffer);
-    expect(result).toBe(originalUuid);
+    expect(result).toEqual(originalUuid);
   });
 
   test('should handle buffer with mixed case values', () => {
@@ -107,7 +107,7 @@ describe('handleBuffer', () => {
     ]);
 
     const result = handleBuffer(mixedBuffer);
-    expect(result).toBe('abcdef12-3456-789a-bcde-f0123456789a');
+    expect(result).toEqual('abcdef12-3456-789a-bcde-f0123456789a');
   });
 
   test('should return malformed string for invalid buffer sizes', () => {
@@ -115,7 +115,7 @@ describe('handleBuffer', () => {
     const shortBuffer = Buffer.from([0x01, 0x02, 0x03]);
 
     const result = handleBuffer(shortBuffer);
-    expect(typeof result).toBe('string');
+    expect(typeof result).toEqual('string');
 
     // Should not match valid UUID format
     expect(result).not.toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
@@ -128,7 +128,7 @@ describe('handleBuffer', () => {
     const emptyBuffer = Buffer.alloc(0);
 
     const result = handleBuffer(emptyBuffer);
-    expect(typeof result).toBe('string');
+    expect(typeof result).toEqual('string');
 
     // Should not match valid UUID format
     expect(result).not.toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
@@ -151,7 +151,7 @@ describe('handleBuffer', () => {
       const buffer = Buffer.from(hex, 'hex');
       const result = handleBuffer(buffer);
 
-      expect(result).toBe(uuid);
+      expect(result).toEqual(uuid);
     }
   });
 
@@ -177,8 +177,8 @@ describe('handleBuffer', () => {
 
     for (const testCase of testCases) {
       const result = handleBuffer(testCase.input);
-      expect(result).toBe(testCase.expected);
-      expect(typeof result).toBe('string');
+      expect(result).toEqual(testCase.expected);
+      expect(typeof result).toEqual('string');
     }
   });
 
@@ -199,14 +199,14 @@ describe('handleBuffer', () => {
     const result4 = handleBuffer(originalBuffer);
 
     // Check that inputs are unchanged
-    expect(originalString).toBe('01932820-4b90-7000-8000-000000000000');
+    expect(originalString).toEqual('01932820-4b90-7000-8000-000000000000');
     expect(originalBuffer).toEqual(originalBufferCopy);
 
     // Check that results are consistent
-    expect(result1).toBe(result3);
-    expect(result2).toBe(result4);
-    expect(result1).toBe('01932820-4b90-7000-8000-000000000000');
-    expect(result2).toBe('01932820-4b90-7000-8000-000000000000');
+    expect(result1).toEqual(result3);
+    expect(result2).toEqual(result4);
+    expect(result1).toEqual('01932820-4b90-7000-8000-000000000000');
+    expect(result2).toEqual('01932820-4b90-7000-8000-000000000000');
   });
 
   test('should handle edge cases for type validation', () => {
@@ -240,7 +240,7 @@ describe('handleBuffer', () => {
 
     for (const testCase of versionTestCases) {
       const result = handleBuffer(testCase.buffer);
-      expect(result).toBe(testCase.expected);
+      expect(result).toEqual(testCase.expected);
 
       // Verify the result is a valid UUID format
       expect(result).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
@@ -266,8 +266,8 @@ describe('handleBuffer', () => {
 
     // Verify all results are consistent
     for (let i = 0; i < results.length; i += 2) {
-      expect(results[i]).toBe(testString); // Buffer conversion
-      expect(results[i + 1]).toBe(testString); // String passthrough
+      expect(results[i]).toEqual(testString); // Buffer conversion
+      expect(results[i + 1]).toEqual(testString); // String passthrough
     }
   });
 });

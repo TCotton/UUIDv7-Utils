@@ -6,8 +6,8 @@ describe('uuidv7toUnsignedInteger', () => {
     const uuidv7 = '01932820-4b90-7000-8000-000000000000';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(typeof result).toBe('bigint');
-    expect(result !== undefined).toBe(true);
+    expect(typeof result).toEqual('bigint');
+    expect(result !== undefined).toEqual(true);
   });
 
   test('should convert a valid UUIDv7 buffer to BigInt', () => {
@@ -33,8 +33,8 @@ describe('uuidv7toUnsignedInteger', () => {
 
     const result = uuidv7toUnsignedInteger(uuidBuffer);
 
-    expect(typeof result).toBe('bigint');
-    expect(result !== undefined).toBe(true);
+    expect(typeof result).toEqual('bigint');
+    expect(result !== undefined).toEqual(true);
   });
 
   test('should produce correct unsigned integer for known UUIDv7', () => {
@@ -46,7 +46,7 @@ describe('uuidv7toUnsignedInteger', () => {
     // This should convert to BigInt(0x00000000000070008000000000000000)
     const expected = BigInt('0x00000000000070008000000000000000');
 
-    expect(result).toBe(expected);
+    expect(result).toEqual(expected);
   });
 
   test('should handle UUIDv7 with all hex characters (0-9, a-f)', () => {
@@ -56,37 +56,37 @@ describe('uuidv7toUnsignedInteger', () => {
     // Hex without dashes: 0123456789ab7cde8f0123456789abcd
     const expected = BigInt('0x0123456789ab7cde8f0123456789abcd');
 
-    expect(result).toBe(expected);
+    expect(result).toEqual(expected);
   });
 
   test('should handle UUIDv7 with uppercase hex characters', () => {
     const uuidv7 = '01932820-4B90-7000-8000-000000000000';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(typeof result).toBe('bigint');
-    expect(result !== undefined).toBe(true);
+    expect(typeof result).toEqual('bigint');
+    expect(result !== undefined).toEqual(true);
 
     // Should be same as lowercase
     const lowercaseResult = uuidv7toUnsignedInteger('01932820-4b90-7000-8000-000000000000');
-    expect(result).toBe(lowercaseResult);
+    expect(result).toEqual(lowercaseResult);
   });
 
   test('should handle UUIDv7 with mixed case hex characters', () => {
     const uuidv7 = '01932820-4b90-7AbC-8DeF-0123456789Aa';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(typeof result).toBe('bigint');
-    expect(result !== undefined).toBe(true);
+    expect(typeof result).toEqual('bigint');
+    expect(result !== undefined).toEqual(true);
 
     const expected = BigInt('0x019328204b907AbC8DeF0123456789Aa');
-    expect(result).toBe(expected);
+    expect(result).toEqual(expected);
   });
 
   test('should return undefined for invalid UUID format', () => {
     const invalidUuid = 'not-a-valid-uuid';
     const result = uuidv7toUnsignedInteger(invalidUuid);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for non-UUIDv7 (wrong version)', () => {
@@ -94,90 +94,90 @@ describe('uuidv7toUnsignedInteger', () => {
     const uuidv4 = '550e8400-e29b-41d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv4);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv1', () => {
     const uuidv1 = '550e8400-e29b-11d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv1);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv3', () => {
     const uuidv3 = '550e8400-e29b-31d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv3);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv4', () => {
     const uuidv4 = '550e8400-e29b-41d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv4);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv5', () => {
     const uuidv5 = '550e8400-e29b-51d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv5);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv6', () => {
     const uuidv6 = '550e8400-e29b-61d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv6);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUIDv8', () => {
     const uuidv8 = '550e8400-e29b-81d4-a716-446655440000';
     const result = uuidv7toUnsignedInteger(uuidv8);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for empty string', () => {
     const result = uuidv7toUnsignedInteger('');
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for malformed UUID string', () => {
     const malformed = '01932820-4b90-7000-8000';
     const result = uuidv7toUnsignedInteger(malformed);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUID with invalid characters', () => {
     const invalidChars = '0193282g-4b90-7000-8000-000000000000';
     const result = uuidv7toUnsignedInteger(invalidChars);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for UUID with wrong hyphen positions', () => {
     const wrongHyphens = '019328204-b907-0008-0000-00000000000';
     const result = uuidv7toUnsignedInteger(wrongHyphens);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for non-16-byte buffer', () => {
     const shortBuffer = Buffer.from([0x01, 0x93, 0x28, 0x20]);
     const result = uuidv7toUnsignedInteger(shortBuffer);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for empty buffer', () => {
     const emptyBuffer = Buffer.from([]);
     const result = uuidv7toUnsignedInteger(emptyBuffer);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for non-UUIDv7 buffer (version 4)', () => {
@@ -188,7 +188,7 @@ describe('uuidv7toUnsignedInteger', () => {
     ]);
     const result = uuidv7toUnsignedInteger(uuidv4Buffer);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should correctly convert hex to BigInt', () => {
@@ -200,7 +200,7 @@ describe('uuidv7toUnsignedInteger', () => {
     const hexString = '0123456789ab7cde8f0123456789abcd';
     const expectedBigInt = BigInt(`0x${hexString}`);
 
-    expect(result).toBe(expectedBigInt);
+    expect(result).toEqual(expectedBigInt);
   });
 
   test('should be consistent with multiple calls for the same UUIDv7', () => {
@@ -210,8 +210,8 @@ describe('uuidv7toUnsignedInteger', () => {
     const result2 = uuidv7toUnsignedInteger(uuidv7);
     const result3 = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(result1).toBe(result2);
-    expect(result2).toBe(result3);
+    expect(result1).toEqual(result2);
+    expect(result2).toEqual(result3);
   });
 
   test('should handle string vs buffer equivalence for UUIDv7', () => {
@@ -224,7 +224,7 @@ describe('uuidv7toUnsignedInteger', () => {
     const resultString = uuidv7toUnsignedInteger(uuidString);
     const resultBuffer = uuidv7toUnsignedInteger(uuidBuffer);
 
-    expect(resultString).toBe(resultBuffer);
+    expect(resultString).toEqual(resultBuffer);
   });
 
   test('should handle real-world UUIDv7 examples', () => {
@@ -238,11 +238,11 @@ describe('uuidv7toUnsignedInteger', () => {
     for (const uuid of examples) {
       const result = uuidv7toUnsignedInteger(uuid);
 
-      expect(result).not.toBe(undefined);
-      expect(typeof result).toBe('bigint');
+      expect(result).not.toEqual(undefined);
+      expect(typeof result).toEqual('bigint');
 
       // Verify it's a positive BigInt
-      expect(result !== undefined && result >= BigInt(0)).toBe(true);
+      expect(result !== undefined && result >= BigInt(0)).toEqual(true);
     }
   });
 
@@ -250,36 +250,36 @@ describe('uuidv7toUnsignedInteger', () => {
     const uuidv7 = '00000000-0000-7000-8000-000000000000';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(result).not.toBe(undefined);
-    expect(typeof result).toBe('bigint');
+    expect(result).not.toEqual(undefined);
+    expect(typeof result).toEqual('bigint');
 
     const expected = BigInt('0x00000000000070008000000000000000');
-    expect(result).toBe(expected);
+    expect(result).toEqual(expected);
   });
 
   test('should handle edge case: UUIDv7 with max timestamp', () => {
     const uuidv7 = 'ffffffff-ffff-7000-8000-000000000000';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(result).not.toBe(undefined);
-    expect(typeof result).toBe('bigint');
+    expect(result).not.toEqual(undefined);
+    expect(typeof result).toEqual('bigint');
 
     const expected = BigInt('0xffffffffffff70008000000000000000');
-    expect(result).toBe(expected);
+    expect(result).toEqual(expected);
   });
 
   test('should return undefined for string with special characters', () => {
     const specialChars = '!@#$%^&*()';
     const result = uuidv7toUnsignedInteger(specialChars);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should return undefined for string with spaces', () => {
     const withSpaces = '01932820 4b90 7000 8000 000000000000';
     const result = uuidv7toUnsignedInteger(withSpaces);
 
-    expect(result).toBe(undefined);
+    expect(result).toEqual(undefined);
   });
 
   test('should verify BigInt is always positive for valid UUIDv7', () => {
@@ -292,9 +292,9 @@ describe('uuidv7toUnsignedInteger', () => {
 
     for (const uuid of validUUIDs) {
       const result = uuidv7toUnsignedInteger(uuid);
-      expect(result).not.toBe(undefined);
+      expect(result).not.toEqual(undefined);
       if (result !== undefined) {
-        expect(result >= BigInt(0)).toBe(true);
+        expect(result >= BigInt(0)).toEqual(true);
       }
     }
   });
@@ -304,10 +304,10 @@ describe('uuidv7toUnsignedInteger', () => {
     const uuidv7 = 'abcdef01-2345-7678-9abc-def012345678';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(result).not.toBe(undefined);
+    expect(result).not.toEqual(undefined);
 
     const expected = BigInt('0xabcdef01234576789abcdef012345678');
-    expect(result).toBe(expected);
+    expect(result).toEqual(expected);
   });
 
   test('should handle buffer with version 7 correctly', () => {
@@ -334,13 +334,13 @@ describe('uuidv7toUnsignedInteger', () => {
 
     const result = uuidv7toUnsignedInteger(buffer);
 
-    expect(result).not.toBe(undefined);
-    expect(typeof result).toBe('bigint');
+    expect(result).not.toEqual(undefined);
+    expect(typeof result).toEqual('bigint');
 
     // Verify it matches the string conversion
     const stringUuid = 'abcdef01-2345-7678-9abc-def012345678';
     const stringResult = uuidv7toUnsignedInteger(stringUuid);
-    expect(result).toBe(stringResult);
+    expect(result).toEqual(stringResult);
   });
 
   test('should handle buffer longer than 16 bytes by using first 16 bytes', () => {
@@ -368,8 +368,8 @@ describe('uuidv7toUnsignedInteger', () => {
     const result = uuidv7toUnsignedInteger(longBuffer);
 
     // Should process the first 16 bytes as a valid UUIDv7
-    expect(result).not.toBe(undefined);
-    expect(typeof result).toBe('bigint');
+    expect(result).not.toEqual(undefined);
+    expect(typeof result).toEqual('bigint');
 
     // Should match the result from a proper 16-byte buffer
     const properBuffer = Buffer.from([
@@ -377,7 +377,7 @@ describe('uuidv7toUnsignedInteger', () => {
       0x00,
     ]);
     const expectedResult = uuidv7toUnsignedInteger(properBuffer);
-    expect(result).toBe(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('should handle UUIDv7 with different valid variant bits', () => {
@@ -391,8 +391,8 @@ describe('uuidv7toUnsignedInteger', () => {
 
     for (const uuid of variants) {
       const result = uuidv7toUnsignedInteger(uuid);
-      expect(result).not.toBe(undefined);
-      expect(typeof result).toBe('bigint');
+      expect(result).not.toEqual(undefined);
+      expect(typeof result).toEqual('bigint');
     }
   });
 
@@ -400,13 +400,13 @@ describe('uuidv7toUnsignedInteger', () => {
     const uuidv7 = '01932820-4b90-7000-8000-000000000000';
     const result = uuidv7toUnsignedInteger(uuidv7);
 
-    expect(result).not.toBe(undefined);
+    expect(result).not.toEqual(undefined);
 
     // Convert back to hex to verify no information loss
     const hexResult = result?.toString(16).padStart(32, '0');
     const expectedHex = '019328204b9070008000000000000000';
 
-    expect(hexResult).toBe(expectedHex);
+    expect(hexResult).toEqual(expectedHex);
   });
 
   test('should maintain precision for all 128 bits', () => {
@@ -419,10 +419,10 @@ describe('uuidv7toUnsignedInteger', () => {
 
     for (const { uuid, hex } of testCases) {
       const result = uuidv7toUnsignedInteger(uuid);
-      expect(result).not.toBe(undefined);
+      expect(result).not.toEqual(undefined);
 
       const expected = BigInt(`0x${hex}`);
-      expect(result).toBe(expected);
+      expect(result).toEqual(expected);
     }
   });
 
@@ -433,13 +433,13 @@ describe('uuidv7toUnsignedInteger', () => {
     const result1 = uuidv7toUnsignedInteger(uuid1);
     const result2 = uuidv7toUnsignedInteger(uuid2);
 
-    expect(result1).not.toBe(undefined);
-    expect(result2).not.toBe(undefined);
+    expect(result1).not.toEqual(undefined);
+    expect(result2).not.toEqual(undefined);
 
     if (result1 !== undefined && result2 !== undefined) {
-      expect(result1 < result2).toBe(true);
-      expect(result2 > result1).toBe(true);
-      expect(result1 !== result2).toBe(true);
+      expect(result1 < result2).toEqual(true);
+      expect(result2 > result1).toEqual(true);
+      expect(result1 !== result2).toEqual(true);
     }
   });
 });

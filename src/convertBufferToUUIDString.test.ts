@@ -10,7 +10,7 @@ describe('convertBufferToUUIDString', () => {
     ]);
 
     const result = convertBufferToUUIDString(uuidBuffer);
-    expect(result).toBe('550e8400-e29b-41d4-a716-446655440000');
+    expect(result).toEqual('550e8400-e29b-41d4-a716-446655440000');
   });
 
   it('should convert a UUIDv7 buffer to UUID string format', () => {
@@ -21,7 +21,7 @@ describe('convertBufferToUUIDString', () => {
     ]);
 
     const result = convertBufferToUUIDString(uuidv7Buffer);
-    expect(result).toBe('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+    expect(result).toEqual('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
   });
 
   it('should convert different UUID versions correctly', () => {
@@ -32,7 +32,7 @@ describe('convertBufferToUUIDString', () => {
     ]);
 
     const result = convertBufferToUUIDString(uuidv1Buffer);
-    expect(result).toBe('cc863758-b714-11f0-b576-c586e8619134');
+    expect(result).toEqual('cc863758-b714-11f0-b576-c586e8619134');
   });
 
   it('should handle nil UUID (all zeros)', () => {
@@ -42,7 +42,7 @@ describe('convertBufferToUUIDString', () => {
     ]);
 
     const result = convertBufferToUUIDString(nilUuidBuffer);
-    expect(result).toBe('00000000-0000-0000-0000-000000000000');
+    expect(result).toEqual('00000000-0000-0000-0000-000000000000');
   });
 
   it('should handle max UUID (all 0xFF)', () => {
@@ -52,7 +52,7 @@ describe('convertBufferToUUIDString', () => {
     ]);
 
     const result = convertBufferToUUIDString(maxUuidBuffer);
-    expect(result).toBe('ffffffff-ffff-ffff-ffff-ffffffffffff');
+    expect(result).toEqual('ffffffff-ffff-ffff-ffff-ffffffffffff');
   });
 
   it('should handle buffers with mixed case hex values', () => {
@@ -63,7 +63,7 @@ describe('convertBufferToUUIDString', () => {
     ]);
 
     const result = convertBufferToUUIDString(mixedBuffer);
-    expect(result).toBe('abcdef12-3456-789a-bcde-f0123456789a');
+    expect(result).toEqual('abcdef12-3456-789a-bcde-f0123456789a');
   });
 
   it('should return the same result as manual hex formatting for valid UUIDs', () => {
@@ -93,8 +93,8 @@ describe('convertBufferToUUIDString', () => {
     const hex = buffer.toString('hex');
     const expectedUuid = `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`;
 
-    expect(result).toBe(expectedUuid);
-    expect(result).toBe('01234567-89ab-4def-8123-456789abcdef');
+    expect(result).toEqual(expectedUuid);
+    expect(result).toEqual('01234567-89ab-4def-8123-456789abcdef');
   });
 
   it('should handle buffers created from existing UUID strings', () => {
@@ -105,7 +105,7 @@ describe('convertBufferToUUIDString', () => {
     const buffer = Buffer.from(hex, 'hex');
     const result = convertBufferToUUIDString(buffer);
 
-    expect(result).toBe(originalUuid);
+    expect(result).toEqual(originalUuid);
   });
 
   it('should return malformed string for buffers that are not 16 bytes', () => {
@@ -114,7 +114,7 @@ describe('convertBufferToUUIDString', () => {
     const result = convertBufferToUUIDString(shortBuffer);
 
     // The stringify function doesn't validate length, so it returns malformed output
-    expect(result).toBe(
+    expect(result).toEqual(
       '010203undefined-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
     );
 
@@ -128,7 +128,7 @@ describe('convertBufferToUUIDString', () => {
     const result = convertBufferToUUIDString(emptyBuffer);
 
     // The stringify function doesn't validate length, so it returns malformed output with undefined values
-    expect(result).toBe(
+    expect(result).toEqual(
       'nan-undefinedundefined-undefinedundefined-undefinedundefined-undefinedundefinedundefinedundefinedundefinedundefined'
     );
 
@@ -195,10 +195,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv1Buffer);
-      expect(result).toBe('cc863758-b714-11f0-b576-c586e8619134');
+      expect(result).toEqual('cc863758-b714-11f0-b576-c586e8619134');
 
       // Verify version bit is 1
-      expect(result.charAt(14)).toBe('1');
+      expect(result.charAt(14)).toEqual('1');
     });
 
     it('should convert UUIDv2 buffers correctly', () => {
@@ -209,10 +209,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv2Buffer);
-      expect(result).toBe('e2a1f3c4-1d23-21f2-8f56-abcdef123456');
+      expect(result).toEqual('e2a1f3c4-1d23-21f2-8f56-abcdef123456');
 
       // Verify version bit is 2
-      expect(result.charAt(14)).toBe('2');
+      expect(result.charAt(14)).toEqual('2');
     });
 
     it('should convert UUIDv3 buffers correctly', () => {
@@ -223,10 +223,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv3Buffer);
-      expect(result).toBe('4384b27d-2698-3cad-8ecd-2b804a6dc803');
+      expect(result).toEqual('4384b27d-2698-3cad-8ecd-2b804a6dc803');
 
       // Verify version bit is 3
-      expect(result.charAt(14)).toBe('3');
+      expect(result.charAt(14)).toEqual('3');
     });
 
     it('should convert UUIDv4 buffers correctly', () => {
@@ -237,10 +237,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv4Buffer);
-      expect(result).toBe('8d5d59a0-b60b-4e2b-9d67-7c5ab53f9e5b');
+      expect(result).toEqual('8d5d59a0-b60b-4e2b-9d67-7c5ab53f9e5b');
 
       // Verify version bit is 4
-      expect(result.charAt(14)).toBe('4');
+      expect(result.charAt(14)).toEqual('4');
     });
 
     it('should convert UUIDv5 buffers correctly', () => {
@@ -251,10 +251,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv5Buffer);
-      expect(result).toBe('a4b10451-0bda-5091-84d4-4eccefb8bc64');
+      expect(result).toEqual('a4b10451-0bda-5091-84d4-4eccefb8bc64');
 
       // Verify version bit is 5
-      expect(result.charAt(14)).toBe('5');
+      expect(result.charAt(14)).toEqual('5');
     });
 
     it('should convert UUIDv6 buffers correctly', () => {
@@ -265,10 +265,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv6Buffer);
-      expect(result).toBe('1e2f3a4b-5c6d-6f78-90ab-cdef12345678');
+      expect(result).toEqual('1e2f3a4b-5c6d-6f78-90ab-cdef12345678');
 
       // Verify version bit is 6
-      expect(result.charAt(14)).toBe('6');
+      expect(result.charAt(14)).toEqual('6');
     });
 
     it('should convert UUIDv7 buffers correctly', () => {
@@ -279,10 +279,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv7Buffer);
-      expect(result).toBe('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+      expect(result).toEqual('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
 
       // Verify version bit is 7
-      expect(result.charAt(14)).toBe('7');
+      expect(result.charAt(14)).toEqual('7');
     });
 
     it('should convert UUIDv8 buffers correctly', () => {
@@ -293,10 +293,10 @@ describe('convertBufferToUUIDString', () => {
       ]);
 
       const result = convertBufferToUUIDString(uuidv8Buffer);
-      expect(result).toBe('d8a1c4e2-12f3-8a4b-91de-5f63bc7a249e');
+      expect(result).toEqual('d8a1c4e2-12f3-8a4b-91de-5f63bc7a249e');
 
       // Verify version bit is 8
-      expect(result.charAt(14)).toBe('8');
+      expect(result.charAt(14)).toEqual('8');
     });
 
     it('should handle all UUID versions in a batch test', () => {
@@ -405,7 +405,7 @@ describe('convertBufferToUUIDString', () => {
         const buffer = Buffer.from(hexString, 'hex');
         const result = convertBufferToUUIDString(buffer);
 
-        expect(result).toBe(testCase.uuid);
+        expect(result).toEqual(testCase.uuid);
 
         // Check variant bits (bits 6-7 of byte 8, should be '10' for RFC 4122 UUIDs)
         const variantChar = result.charAt(19); // First character of 4th group

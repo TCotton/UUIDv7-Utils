@@ -24,19 +24,19 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(uuidBytes);
-    expect(result).toBe('01932820-4b90-7000-8000-000000000000');
+    expect(result).toEqual('01932820-4b90-7000-8000-000000000000');
   });
 
   test('should handle all zeros (nil UUID)', () => {
     const nilUuid = new Uint8Array(16).fill(0);
     const result = stringify(nilUuid);
-    expect(result).toBe('00000000-0000-0000-0000-000000000000');
+    expect(result).toEqual('00000000-0000-0000-0000-000000000000');
   });
 
   test('should handle all 0xFF bytes (max UUID)', () => {
     const maxUuid = new Uint8Array(16).fill(0xff);
     const result = stringify(maxUuid);
-    expect(result).toBe('ffffffff-ffff-ffff-ffff-ffffffffffff');
+    expect(result).toEqual('ffffffff-ffff-ffff-ffff-ffffffffffff');
   });
 
   test('should work with different UUID versions', () => {
@@ -61,7 +61,7 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(v4Bytes);
-    expect(result).toBe('12345678-9abc-4def-8012-3456789abcde');
+    expect(result).toEqual('12345678-9abc-4def-8012-3456789abcde');
   });
 
   test('should work with offset parameter', () => {
@@ -93,7 +93,7 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(largerArray, 5);
-    expect(result).toBe('01932820-4b90-7000-8000-000000000000');
+    expect(result).toEqual('01932820-4b90-7000-8000-000000000000');
   });
 
   test('should handle mixed case bytes correctly (always lowercase output)', () => {
@@ -103,7 +103,7 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(mixedBytes);
-    expect(result).toBe('abcdef12-3456-789a-bcde-f0123456789a');
+    expect(result).toEqual('abcdef12-3456-789a-bcde-f0123456789a');
   });
 
   test('should preserve exact byte values in conversion', () => {
@@ -114,7 +114,7 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(testBytes);
-    expect(result).toBe('00010f10-7f80-feff-aa55-123456789abc');
+    expect(result).toEqual('00010f10-7f80-feff-aa55-123456789abc');
   });
 
   test('should handle edge case bytes (boundary values)', () => {
@@ -138,7 +138,7 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(edgeBytes);
-    expect(result).toBe('00017f80-feff-0a0f-101f-a0aff0ff99cc');
+    expect(result).toEqual('00017f80-feff-0a0f-101f-a0aff0ff99cc');
   });
 
   test('should work with real UUIDv7 timestamp patterns', () => {
@@ -167,7 +167,7 @@ describe('stringify', () => {
     ]);
 
     const result = stringify(uuidv7Bytes);
-    expect(result).toBe('01932820-4b90-7000-8000-123456789abc');
+    expect(result).toEqual('01932820-4b90-7000-8000-123456789abc');
   });
 
   test('should handle arrays created from different sources', () => {
@@ -179,7 +179,7 @@ describe('stringify', () => {
     const uint8Array = new Uint8Array(regularArray);
 
     const result = stringify(uint8Array);
-    expect(result).toBe('12345678-9abc-def0-1234-56789abcdef0');
+    expect(result).toEqual('12345678-9abc-def0-1234-56789abcdef0');
   });
 
   test('should maintain consistent output format', () => {
@@ -202,7 +202,7 @@ describe('stringify', () => {
 
     for (const testCase of testCases) {
       const result = stringify(testCase.input);
-      expect(result).toBe(testCase.expected);
+      expect(result).toEqual(testCase.expected);
       // Verify UUID format (8-4-4-4-12 pattern)
       expect(result).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
     }
@@ -223,10 +223,10 @@ describe('stringify', () => {
     }
 
     const result1 = stringify(largeBuffer, 0);
-    expect(result1).toBe('00010203-0405-0607-0809-0a0b0c0d0e0f');
+    expect(result1).toEqual('00010203-0405-0607-0809-0a0b0c0d0e0f');
 
     const result2 = stringify(largeBuffer, 16);
-    expect(result2).toBe('fffefdfc-fbfa-f9f8-f7f6-f5f4f3f2f1f0');
+    expect(result2).toEqual('fffefdfc-fbfa-f9f8-f7f6-f5f4f3f2f1f0');
   });
 
   test('should be consistent with multiple calls', () => {
@@ -239,9 +239,9 @@ describe('stringify', () => {
     const result2 = stringify(testBytes);
     const result3 = stringify(testBytes);
 
-    expect(result1).toBe(result2);
-    expect(result2).toBe(result3);
-    expect(result1).toBe('01932820-4b90-7000-8000-000000000000');
+    expect(result1).toEqual(result2);
+    expect(result2).toEqual(result3);
+    expect(result1).toEqual('01932820-4b90-7000-8000-000000000000');
   });
 
   test('should handle performance-critical byte patterns', () => {
@@ -274,7 +274,7 @@ describe('stringify', () => {
 
     for (let i = 0; i < patterns.length; i++) {
       const result = stringify(patterns[i]);
-      expect(result).toBe(expectedResults[i]);
+      expect(result).toEqual(expectedResults[i]);
     }
   });
 });
