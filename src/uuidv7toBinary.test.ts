@@ -306,10 +306,10 @@ describe('uuidv7toBinary', () => {
     expect(result).not.toBe(undefined);
 
     // Verify 'a' at position 0 converts to '1010'
-    assert.strictEqual(result?.substring(0, 4), '1010');
+    expect(result?.substring(0, 4)).toBe('1010');
 
     // Verify 'b' at position 1 converts to '1011'
-    assert.strictEqual(result?.substring(4, 8), '1011');
+    expect(result?.substring(4, 8)).toBe('1011');
 
     // Verify 'f' at position 5 converts to '1111'
     assert.strictEqual(result?.substring(20, 24), '1111');

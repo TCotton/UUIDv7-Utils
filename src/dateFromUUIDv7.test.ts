@@ -240,8 +240,8 @@ describe('dateFromUUIDv7', () => {
       const stringResult = dateFromUUIDv7(testCase.string);
 
       // Both should return valid results
-      expect(bufferResult !== undefined, 'Buffer result should not be undefined').toBeTruthy();
-      expect(stringResult !== undefined, 'String result should not be undefined').toBeTruthy();
+      expect(bufferResult !== undefined).toBeTruthy();
+      expect(stringResult !== undefined).toBeTruthy();
 
       // Results should be identical
       expect(bufferResult.dateUnixEpoch).toBe(

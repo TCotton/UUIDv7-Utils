@@ -154,7 +154,7 @@ describe('convertBufferToUUIDString', () => {
       expect(result).not.toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
       // Results should contain 'undefined' or 'nan' for invalid input
-      assert.ok(result.includes('undefined') || result.includes('nan'));
+      expect(result.includes('undefined') || result.includes('nan')).toBeTruthy();
     }
   });
 
@@ -373,11 +373,7 @@ describe('convertBufferToUUIDString', () => {
         expect(result).toBe(testCase.expected, `Failed for UUID version ${testCase.version}`);
 
         // Verify version bit matches expected version
-        assert.strictEqual(
-          result.charAt(14),
-          testCase.version.toString(),
-          `Version bit mismatch for UUID version ${testCase.version}`
-        );
+        expect(result.charAt(14)).toBe(testCase.version.toString());
 
         // Verify the result follows UUID format
         expect(result).toMatch(

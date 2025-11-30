@@ -121,7 +121,7 @@ describe('handleBuffer', () => {
     expect(result).not.toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
     // Should contain 'undefined' from stringify function
-    assert.ok(result.includes('undefined'));
+    expect(result.includes('undefined')).toBeTruthy();
   });
 
   test('should return malformed string for empty buffer', () => {
@@ -134,7 +134,7 @@ describe('handleBuffer', () => {
     expect(result).not.toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
     // Should contain 'undefined' or 'nan' from stringify function
-    assert.ok(result.includes('undefined') || result.includes('nan'));
+    expect(result.includes('undefined') || result.includes('nan')).toBeTruthy();
   });
 
   test('should maintain round-trip conversion for valid buffers', () => {
