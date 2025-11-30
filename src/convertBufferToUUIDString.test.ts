@@ -414,10 +414,7 @@ describe('convertBufferToUUIDString', () => {
         // Check variant bits (bits 6-7 of byte 8, should be '10' for RFC 4122 UUIDs)
         const variantChar = result.charAt(19); // First character of 4th group
         const variantByte = parseInt(variantChar, 16);
-        assert.ok(
-          (variantByte & 0x8) !== 0 && (variantByte & 0x4) === 0,
-          `Invalid variant bits for version ${testCase.version}: ${variantChar}`
-        );
+        expect((variantByte & 0x8) !== 0 && (variantByte & 0x4)).toEqual(0)
       }
     });
   });
