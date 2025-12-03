@@ -14,6 +14,37 @@ type UUIDVersionValidation =
   | 'MaxUUID'
   | undefined;
 
+/**
+ * @function uuidVersionValidation
+ * @description Validates a UUID string or Buffer and returns its version identifier.
+ *
+ * Validates the input as a UUID and extracts the version from the appropriate position.
+ * Returns a string indicating the UUID version ('v1' through 'v8'), or special identifiers
+ * for Nil UUID (all zeros) and Max UUID (all ones). If the input is not a valid UUID,
+ * returns `undefined`.
+ *
+ * @param {string | Buffer} uuid - The UUID as a string or Buffer.
+ * @returns {UUIDVersionValidation} A version string ('v1'-'v8'), 'NilUUID', 'MaxUUID', or `undefined` if invalid.
+ *
+ * @example
+ * // Returns version identifier for UUIDv7
+ * uuidVersionValidation('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+ * // 'v7'
+ *
+ * @example
+ * // Returns version identifier for UUIDv4
+ * uuidVersionValidation('550e8400-e29b-41d4-a716-446655440000');
+ * // 'v4'
+ *
+ * @example
+ * // Returns special identifier for Nil UUID
+ * uuidVersionValidation('00000000-0000-0000-0000-000000000000');
+ * // 'NilUUID'
+ *
+ * @example
+ * // Returns undefined for invalid UUID
+ * uuidVersionValidation('not-a-uuid');
+ */
 const uuidVersionValidation = (uuid: string | Buffer): UUIDVersionValidation => {
   const uuidString = handleBuffer(uuid);
   const match: RegExpMatchArray | null = uuidRegex(uuidString);
