@@ -9,6 +9,31 @@ type DateFromUUIDv7 =
     }
   | undefined;
 
+/**
+ * @function dateFromUUIDv7
+ * @description Extracts the timestamp from a UUIDv7 string or Buffer and converts it to multiple date formats.
+ *
+ * Validates the input as a UUID, checks that it is version 7, and then
+ * extracts the 48-bit timestamp from the first 12 hex digits. Returns an object containing
+ * the timestamp in ISO string format, Unix epoch milliseconds, and UTC string format.
+ * If the input is not a valid UUIDv7, returns `undefined`.
+ *
+ * @param {string | Buffer} uuid - The UUIDv7 as a string or Buffer.
+ * @returns {DateFromUUIDv7} An object with `dateToIsoString`, `dateUnixEpoch`, and `dateToUTCString` properties, or `undefined` if invalid.
+ *
+ * @example
+ * // Returns date object with multiple formats
+ * dateFromUUIDv7('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+ * // {
+ * //   dateToIsoString: '2024-11-21T10:30:45.000Z',
+ * //   dateUnixEpoch: 1732186245000,
+ * //   dateToUTCString: 'Thu, 21 Nov 2024 10:30:45 GMT'
+ * // }
+ *
+ * @example
+ * // Returns undefined for invalid UUID
+ * dateFromUUIDv7('not-a-uuid');
+ */
 const dateFromUUIDv7 = (uuid: string | Buffer): DateFromUUIDv7 => {
   const uuidString = handleBuffer(uuid);
   // Validate UUID format using uuidRegex

@@ -4,7 +4,8 @@ import { uuidRegex } from './uuidRegex.js';
 type UUIDv7toUnsignedInteger = bigint | undefined;
 
 /**
- * Converts a UUIDv7 string or Buffer to its unsigned integer representation.
+ * @function uuidv7toUnsignedInteger
+ * @description Converts a UUIDv7 string or Buffer to its unsigned integer representation.
  *
  * Validates the input as a UUID, checks that it is version 7, and then
  * returns a BigInt representing the complete 128-bit UUID value. If the input is not a valid
@@ -16,6 +17,7 @@ type UUIDv7toUnsignedInteger = bigint | undefined;
  * @example
  * // Returns a BigInt
  * uuidv7toUnsignedInteger('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1');
+ * // 2087074048307655244234234738893601n
  *
  * @example
  * // Returns undefined for invalid UUID

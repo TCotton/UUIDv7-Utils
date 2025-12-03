@@ -4,7 +4,8 @@ import { uuidRegex } from './uuidRegex.js';
 type UUIDv7toBinary = string | undefined;
 
 /**
- * Converts a UUIDv7 string or Buffer to its binary (bit string) representation.
+ * @function uuidv7toBinary
+ * @description Converts a UUIDv7 string or Buffer to its binary (bit string) representation.
  *
  * Validates the input as a UUID, checks that it is version 7, and then
  * returns a string of 128 bits representing the UUID. If the input is not a valid
