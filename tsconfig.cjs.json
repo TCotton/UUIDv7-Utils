@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "outDir": "./dist/cjs",
     "declaration": true,
-    "declarationMap": false
+    "declarationMap": false,
+    "verbatimModuleSyntax": false
   },
   "include": [
     "src/index.cjs.ts",
