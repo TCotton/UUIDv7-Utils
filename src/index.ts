@@ -8,6 +8,8 @@ import { uuidv7toUnsignedInteger } from './uuidv7toUnsignedInteger.js';
 import type { UUIDv7toUnsignedInteger } from './uuidv7toUnsignedInteger.js';
 import { uuidv7withURNWrapper } from './uuidv7withURNWrapper.js';
 import type { UUIDv7withURNWrapper } from './uuidv7withURNWrapper.js';
+import { isValidUUID } from './isValidUUID.js';
+import type { IsValidUUID } from './isValidUUID.js';
 
 export {
   dateFromUUIDv7,
@@ -15,6 +17,7 @@ export {
   uuidv7toBinary,
   uuidv7toUnsignedInteger,
   uuidv7withURNWrapper,
+  isValidUUID,
 };
 
 export type {
@@ -23,4 +26,5 @@ export type {
   UUIDv7toBinary,
   UUIDv7toUnsignedInteger,
   UUIDv7withURNWrapper,
+  IsValidUUID,
 };

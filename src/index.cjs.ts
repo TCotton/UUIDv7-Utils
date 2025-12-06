@@ -18,6 +18,7 @@ import {
   type UUIDv7withURNWrapper as _UUIDv7withURNWrapper,
   uuidv7withURNWrapper as _uuidv7withURNWrapper,
 } from './uuidv7withURNWrapper.js';
+import { type IsValidUUID as _IsValidUUID, isValidUUID as _isValidUUID } from './isValidUUID.js';
 
 /**
  * Extract date information from a UUIDv7.
@@ -111,3 +112,21 @@ export type UUIDv7withURNWrapper = _UUIDv7withURNWrapper;
  * instead of `const { uuidv7withURNWrapper } = require('uuidv7-utilities')`
  */
 export const uuidv7withURNWrapper = _uuidv7withURNWrapper;
+
+/**
+ * Type representing the return value of isValidUUID
+ *
+ * @deprecated CommonJS support is deprecated and will be removed in future versions
+ * Please migrate to ES modules: `import type { IsValidUUID } from 'uuidv7-utilities'`
+ * instead of `const { IsValidUUID } = require('uuidv7-utilities')`
+ */
+export type IsValidUUID = _IsValidUUID;
+
+/**
+ * Validate whether a string is a properly formatted UUID.
+ *
+ * @deprecated CommonJS support is deprecated and will be removed in future versions
+ * Please migrate to ES modules: `import { isValidUUID } from 'uuidv7-utilities'`
+ * instead of `const { isValidUUID } = require('uuidv7-utilities')`
+ */
+export const isValidUUID = _isValidUUID;
