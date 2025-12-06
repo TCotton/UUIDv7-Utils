@@ -89,10 +89,6 @@ isValidUUID('not-a-uuid'); // false
 const buffer = Buffer.from([0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c, 0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1]);
 isValidUUID(buffer); // true
 ```
-isValidUUID('00000000-0000-0000-0000-000000000000'); // true (Nil UUID)
-isValidUUID('FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'); // true (Max UUID)
-isValidUUID('not-a-uuid'); // false
-```
 
 ## [3.0.1] - 2025-11-30
 

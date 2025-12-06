@@ -65,11 +65,7 @@ const isValidUUID = (uuid: string | Buffer): IsValidUUID => {
   // Max UUID comparison is case-insensitive to handle both upper and lower case formats
   const isMaxUUID = uuidString.toLowerCase() === 'ffffffff-ffff-ffff-ffff-ffffffffffff';
 
-  if (isNilUUID) {
-    return true;
-  }
-
-  if (isMaxUUID) {
+  if (isNilUUID || isMaxUUID) {
     return true;
   }
 
