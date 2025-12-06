@@ -5,6 +5,91 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2025-12-06
+
+### Added
+- **New Function: `isValidUUID`** - UUID format validation utility
+  - Validates whether a string or Buffer is a properly formatted UUID
+  - Supports both string and Buffer inputs seamlessly
+  - Supports all UUID versions (v1-v8) according to RFC 4122
+  - Special handling for Nil UUID (`00000000-0000-0000-0000-000000000000`)
+  - Special handling for Max UUID (`ffffffff-ffff-ffff-ffff-ffffffffffff`) with case-insensitive comparison
+  - Returns `true` for valid UUIDs, `false` for malformed or invalid inputs
+  - Buffer inputs are automatically converted to UUID string format before validation
+  - Exported in both ES modules and CommonJS formats
+  - Full TypeScript support with `IsValidUUID` type export
+
+- **Comprehensive Test Suite for `isValidUUID`**:
+  - 42 test cases covering all UUID versions (v1-v8) with both string and Buffer inputs
+  - String tests: invalid formats (wrong length, missing hyphens, wrong hyphen positions)
+  - String tests: non-hex characters, special characters, whitespace
+  - String tests: Nil and Max UUIDs (including case-insensitive handling)
+  - String tests: edge cases (empty strings, unicode, emojis, underscores)
+  - Buffer tests: valid UUIDs for all versions (v1, v3, v4, v5, v7)
+  - Buffer tests: Nil and Max UUID Buffers
+  - Buffer tests: invalid Buffers (too short, empty)
+  - Buffer tests: Buffer length handling (>16 bytes uses first 16)
+  - Buffer tests: string vs Buffer equivalence validation
+  - All tests passing across Node.js and Bun runtimes
+
+- **Complete JSDoc Documentation**:
+  - Added comprehensive JSDoc comments to `isValidUUID` function
+  - Includes detailed `@description` with RFC 4122 compliance notes
+  - Multiple `@example` blocks demonstrating usage with both string and Buffer inputs
+  - Documents support for Nil and Max UUIDs
+  - Documents seamless string and Buffer input handling
+
+### Changed
+- **TypeScript Configuration Improvements**:
+  - Enabled `verbatimModuleSyntax` in both `tsconfig.json` and `tsconfig.cjs.json`
+  - Enforces explicit `import type` and `export type` for type-only imports/exports
+  - Improves tree-shaking and bundle size optimization
+  - All existing code updated to comply with stricter module syntax
+
+- **Code Quality Enhancements**:
+  - Updated all import statements to use `import type` for type-only imports
+  - Updated all export statements to use `export type` for type-only exports
+  - Added Biome linting exception for non-null assertions in `stringify.ts`
+  - Maintained intentional non-null assertion behavior for malformed buffer handling
+
+- **Module Exports**:
+  - Updated `src/index.ts` to export `isValidUUID` function and `IsValidUUID` type
+  - Updated `src/index.cjs.ts` to export CommonJS-compatible `isValidUUID` with deprecation notice
+  - Consistent export pattern across all utility functions
+
+### Technical Details
+- **Test Suite Statistics**: 241 total tests across 11 test files
+  - Previous: 199 tests in 10 files
+  - Added: 42 tests in 1 new file (`isValidUUID.test.ts`)
+  - String validation tests: 30
+  - Buffer validation tests: 12
+- **All Tests Passing**:
+  - Node.js runtime: 241/241 tests passing
+  - Bun runtime: 241/241 tests passing
+- **TypeScript Strict Mode**: Full compliance with `verbatimModuleSyntax`
+- **Backward Compatible**: No breaking changes to existing public API
+
+### Migration Notes
+This release is fully backward compatible. The new `isValidUUID` function is an addition to the existing API and does not affect any existing functionality. Users can start using the new function immediately:
+
+```typescript
+// ES Modules
+import { isValidUUID } from 'uuidv7-utilities';
+
+// CommonJS (deprecated but supported)
+const { isValidUUID } = require('uuidv7-utilities');
+
+// Usage with strings
+isValidUUID('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1'); // true
+isValidUUID('00000000-0000-0000-0000-000000000000'); // true (Nil UUID)
+isValidUUID('FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'); // true (Max UUID)
+isValidUUID('not-a-uuid'); // false
+
+// Usage with Buffers
+const buffer = Buffer.from([0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c, 0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1]);
+isValidUUID(buffer); // true
+```
+
 ## [3.0.1] - 2025-11-30
 
 ### Changed

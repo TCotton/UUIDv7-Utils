@@ -13,6 +13,14 @@ A lightweight TypeScript utility library for handling UUIDv7 strings and Buffers
   - Returns string `'v1' | 'v2' | 'v3' | 'v4' | 'v5' | 'v6' | 'v7' | 'v8' | 'NilUUID' | 'MaxUUID' | undefined`
   - Conforms to [RFC 9562 Universally Unique Identifiers (UUIDs)](https://www.rfc-editor.org/rfc/rfc9562.html)
 
+- **Validate UUID format** - `isValidUUID(uuid: string | Buffer): boolean` _(New in v3.1.0)_
+  - Validates whether a string or Buffer is a properly formatted UUID
+  - Supports both string and Buffer inputs
+  - Returns `true` for valid UUIDs of any version (v1-v8)
+  - Supports special UUIDs: Nil UUID and Max UUID (case-insensitive)
+  - Returns `false` for malformed or invalid inputs
+  - Fast validation using regex pattern matching
+
 - **Convert UUIDv7 to binary** - `uuidv7toBinary(uuid: string | Buffer): string | undefined` _(New in v2.4.0)_
   - Converts UUIDv7 to 128-bit binary representation
   - Supports both string and Buffer inputs
@@ -58,6 +66,97 @@ A UUID v7 creation NPM library is [uuidv7](https://www.npmjs.com/package/uuidv7)
 Using the `dateFromUUIDv7` function, you can extract the timestamp from the UUIDv7. It will return `undefined` if the UUID is not a valid UUID string. The `uuidVersionValidation` function will return the UUID version from 1 to 8, or the string `'NilUUID'` or `'MaxUUID'`, and `undefined` if the UUID is not a valid UUID string. The `uuidv7toBinary` function converts a UUIDv7 to its 128-bit binary representation, useful for bit-level analysis or cryptographic applications. The `uuidv7toUnsignedInteger` function converts a UUIDv7 to a 128-bit unsigned integer (BigInt), enabling mathematical operations and efficient numerical comparisons. The `uuidv7withURNWrapper` function wraps a UUIDv7 with the RFC 4122 compliant `urn:uuid:` prefix, useful for semantic web applications and standards-compliant UUID references.
 
 ## Usage
+
+### UUID Validation (New in v3.1.0)
+
+```typescript
+import { isValidUUID } from 'uuidv7-utilities';
+
+// Validate UUIDv7 string
+const uuidv7 = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
+console.log(isValidUUID(uuidv7));  // true
+
+// Validate UUIDv7 Buffer
+const uuidv7Buffer = Buffer.from([
+  0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c,
+  0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1
+]);
+console.log(isValidUUID(uuidv7Buffer));  // true
+
+// Validate any UUID version (string)
+console.log(isValidUUID('550e8400-e29b-41d4-a716-446655440000'));  // true (UUIDv4)
+console.log(isValidUUID('6ba7b810-9dad-11d1-80b4-00c04fd430c8'));  // true (UUIDv1)
+
+// Validate any UUID version (Buffer)
+const uuidv4Buffer = Buffer.from([
+  0x55, 0x0e, 0x84, 0x00, 0xe2, 0x9b, 0x41, 0xd4,
+  0xa7, 0x16, 0x44, 0x66, 0x55, 0x44, 0x00, 0x00
+]);
+console.log(isValidUUID(uuidv4Buffer));  // true (UUIDv4)
+
+// Case-insensitive validation
+console.log(isValidUUID('018FD8F9-8C00-7A4C-8A47-1A6D4B90F3A1'));  // true
+console.log(isValidUUID('018Fd8F9-8C00-7a4c-8A47-1a6D4b90F3a1'));  // true
+
+// Special UUIDs
+console.log(isValidUUID('00000000-0000-0000-0000-000000000000'));  // true (Nil UUID)
+console.log(isValidUUID('ffffffff-ffff-ffff-ffff-ffffffffffff'));  // true (Max UUID)
+console.log(isValidUUID('FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'));  // true (Max UUID uppercase)
+
+// Nil UUID as Buffer
+const nilBuffer = Buffer.from([
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+]);
+console.log(isValidUUID(nilBuffer));  // true
+
+// Max UUID as Buffer
+const maxBuffer = Buffer.from([
+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+]);
+console.log(isValidUUID(maxBuffer));  // true
+
+// Invalid UUIDs (string)
+console.log(isValidUUID('not-a-uuid'));  // false
+console.log(isValidUUID('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a'));  // false (too short)
+console.log(isValidUUID('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3ag'));  // false (invalid character 'g')
+console.log(isValidUUID(''));  // false (empty string)
+
+// Invalid UUIDs (Buffer)
+const shortBuffer = Buffer.from([0x01, 0x02, 0x03]);
+console.log(isValidUUID(shortBuffer));  // false (too short)
+
+const emptyBuffer = Buffer.alloc(0);
+console.log(isValidUUID(emptyBuffer));  // false (empty)
+
+// Use before processing (string or Buffer)
+const uuid = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
+if (isValidUUID(uuid)) {
+    // Safe to process UUID
+    const result = dateFromUUIDv7(uuid);
+    console.log(result?.dateToIsoString);
+} else {
+    console.error('Invalid UUID format');
+}
+
+// String vs Buffer equivalence
+const stringUuid = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
+const bufferUuid = Buffer.from([
+  0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c,
+  0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1
+]);
+console.log(isValidUUID(stringUuid) === isValidUUID(bufferUuid));  // true
+
+// Validate user input
+function processUserUUID(userInput: string | Buffer) {
+    if (!isValidUUID(userInput)) {
+        throw new Error('Invalid UUID format provided');
+    }
+    // Continue processing...
+    return uuidVersionValidation(userInput);
+}
+```
 
 ### URN Wrapper (New in v2.6.0)
 
@@ -267,26 +366,30 @@ if (result) {
 **⚠️ DEPRECATED** - CommonJS support is deprecated and will be removed in a future version. Please migrate to ES modules.
 
 ```javascript
-const { dateFromUUIDv7, uuidVersionValidation, uuidv7toBinary, uuidv7toUnsignedInteger, uuidv7withURNWrapper } = require('uuidv7-utilities');
+const { dateFromUUIDv7, uuidVersionValidation, isValidUUID, uuidv7toBinary, uuidv7toUnsignedInteger, uuidv7withURNWrapper } = require('uuidv7-utilities');
 
 const uuidString = '018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1';
-const uuid = uuidVersionValidation(uuidString);
-if (uuid === 'v7') {
-    const result = dateFromUUIDv7(uuidString);
-    if (result) {
-        console.log(result.dateToIsoString);     // '2024-06-02T12:43:04.064Z'
-        console.log(result.dateUnixEpoch);       // 1717332184064
-        console.log(result.dateToUTCString);     // 'Sun, 02 Jun 2024 12:43:04 GMT'
+
+// Validate UUID format
+if (isValidUUID(uuidString)) {
+    const uuid = uuidVersionValidation(uuidString);
+    if (uuid === 'v7') {
+        const result = dateFromUUIDv7(uuidString);
+        if (result) {
+            console.log(result.dateToIsoString);     // '2024-06-02T12:43:04.064Z'
+            console.log(result.dateUnixEpoch);       // 1717332184064
+            console.log(result.dateToUTCString);     // 'Sun, 02 Jun 2024 12:43:04 GMT'
+        }
+        
+        const binary = uuidv7toBinary(uuidString);
+        console.log(binary?.length);  // 128
+        
+        const unsignedInt = uuidv7toUnsignedInteger(uuidString);
+        console.log(typeof unsignedInt);  // 'bigint'
+        
+        const urnWrapped = uuidv7withURNWrapper(uuidString);
+        console.log(urnWrapped);  // 'urn:uuid:018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1'
     }
-    
-    const binary = uuidv7toBinary(uuidString);
-    console.log(binary?.length);  // 128
-    
-    const unsignedInt = uuidv7toUnsignedInteger(uuidString);
-    console.log(typeof unsignedInt);  // 'bigint'
-    
-    const urnWrapped = uuidv7withURNWrapper(uuidString);
-    console.log(urnWrapped);  // 'urn:uuid:018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1'
 }
 ```
 
