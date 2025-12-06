@@ -9,27 +9,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **New Function: `isValidUUID`** - UUID format validation utility
-  - Validates whether a string matches the standard UUID format (8-4-4-4-12 hexadecimal pattern)
+  - Validates whether a string or Buffer is a properly formatted UUID
+  - Supports both string and Buffer inputs seamlessly
   - Supports all UUID versions (v1-v8) according to RFC 4122
   - Special handling for Nil UUID (`00000000-0000-0000-0000-000000000000`)
   - Special handling for Max UUID (`ffffffff-ffff-ffff-ffff-ffffffffffff`) with case-insensitive comparison
-  - Returns `true` for valid UUIDs, `false` for malformed or invalid strings
+  - Returns `true` for valid UUIDs, `false` for malformed or invalid inputs
+  - Buffer inputs are automatically converted to UUID string format before validation
   - Exported in both ES modules and CommonJS formats
   - Full TypeScript support with `IsValidUUID` type export
 
 - **Comprehensive Test Suite for `isValidUUID`**:
-  - 30 test cases covering all UUID versions (v1-v8)
-  - Tests for invalid formats (wrong length, missing hyphens, wrong hyphen positions)
-  - Tests for non-hex characters, special characters, whitespace
-  - Tests for Nil and Max UUIDs (including case-insensitive handling)
-  - Tests for edge cases (empty strings, unicode, emojis, underscores)
+  - 42 test cases covering all UUID versions (v1-v8) with both string and Buffer inputs
+  - String tests: invalid formats (wrong length, missing hyphens, wrong hyphen positions)
+  - String tests: non-hex characters, special characters, whitespace
+  - String tests: Nil and Max UUIDs (including case-insensitive handling)
+  - String tests: edge cases (empty strings, unicode, emojis, underscores)
+  - Buffer tests: valid UUIDs for all versions (v1, v3, v4, v5, v7)
+  - Buffer tests: Nil and Max UUID Buffers
+  - Buffer tests: invalid Buffers (too short, empty)
+  - Buffer tests: Buffer length handling (>16 bytes uses first 16)
+  - Buffer tests: string vs Buffer equivalence validation
   - All tests passing across Node.js and Bun runtimes
 
 - **Complete JSDoc Documentation**:
   - Added comprehensive JSDoc comments to `isValidUUID` function
   - Includes detailed `@description` with RFC 4122 compliance notes
-  - Multiple `@example` blocks demonstrating usage
+  - Multiple `@example` blocks demonstrating usage with both string and Buffer inputs
   - Documents support for Nil and Max UUIDs
+  - Documents seamless string and Buffer input handling
 
 ### Changed
 - **TypeScript Configuration Improvements**:
@@ -50,12 +58,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Consistent export pattern across all utility functions
 
 ### Technical Details
-- **Test Suite Statistics**: 229 total tests across 11 test files
+- **Test Suite Statistics**: 241 total tests across 11 test files
   - Previous: 199 tests in 10 files
-  - Added: 30 tests in 1 new file (`isValidUUID.test.ts`)
+  - Added: 42 tests in 1 new file (`isValidUUID.test.ts`)
+  - String validation tests: 30
+  - Buffer validation tests: 12
 - **All Tests Passing**:
-  - Node.js runtime: 229/229 tests passing
-  - Bun runtime: 229/229 tests passing
+  - Node.js runtime: 241/241 tests passing
+  - Bun runtime: 241/241 tests passing
 - **TypeScript Strict Mode**: Full compliance with `verbatimModuleSyntax`
 - **Backward Compatible**: No breaking changes to existing public API
 
@@ -69,8 +79,16 @@ import { isValidUUID } from 'uuidv7-utilities';
 // CommonJS (deprecated but supported)
 const { isValidUUID } = require('uuidv7-utilities');
 
-// Usage
+// Usage with strings
 isValidUUID('018fd8f9-8c00-7a4c-8a47-1a6d4b90f3a1'); // true
+isValidUUID('00000000-0000-0000-0000-000000000000'); // true (Nil UUID)
+isValidUUID('FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'); // true (Max UUID)
+isValidUUID('not-a-uuid'); // false
+
+// Usage with Buffers
+const buffer = Buffer.from([0x01, 0x8f, 0xd8, 0xf9, 0x8c, 0x00, 0x7a, 0x4c, 0x8a, 0x47, 0x1a, 0x6d, 0x4b, 0x90, 0xf3, 0xa1]);
+isValidUUID(buffer); // true
+```
 isValidUUID('00000000-0000-0000-0000-000000000000'); // true (Nil UUID)
 isValidUUID('FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF'); // true (Max UUID)
 isValidUUID('not-a-uuid'); // false
