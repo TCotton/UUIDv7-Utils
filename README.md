@@ -50,7 +50,7 @@ npm install uuidv7-utilities
 ## Requirements
 
 - Node.js >= 18.0.0
-- Testing on Node versions 18, 20 and 22
+- Testing on Node versions 18, 20, 22 and 24
 - Testing on Bun 1.3.3
 
 ## Why you should use UUIDv7
