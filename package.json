@@ -1,6 +1,6 @@
 {
   "name": "uuidv7-utilities",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "type": "module",
   "description": "UUIDv7 utilities for extracting date information from a UUIDv7 string and validating UUID versions.",
   "main": "dist/cjs/index.cjs.js",
